@@ -7,14 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2700D45B1FABF82F00186C8B /* SafeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45A1FABF82F00186C8B /* SafeMapView.swift */; };
+		2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */; };
 		2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */; };
+		271965F71FCE273700198BEE /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271965F61FCE273700198BEE /* LoadingState.swift */; };
 		272C56251FA924D800A799CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56241FA924D800A799CE /* AppDelegate.swift */; };
 		272C56271FA924D800A799CE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56261FA924D800A799CE /* MapViewController.swift */; };
 		272C562C1FA924D800A799CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272C562B1FA924D800A799CE /* Assets.xcassets */; };
 		272C563A1FA924D800A799CE /* CentigradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56391FA924D800A799CE /* CentigradeTests.swift */; };
 		272C56451FA924D900A799CE /* CentigradeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56441FA924D900A799CE /* CentigradeUITests.swift */; };
 		274B7FB51FBBA7E600CEC95E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FB41FBBA7E600CEC95E /* Secrets.swift */; };
+		274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */; };
+		274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FBA1FBDF67400CEC95E /* ImageTools.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2700D45A1FABF82F00186C8B /* SafeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeMapView.swift; sourceTree = "<group>"; };
+		2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+AttributionLabel.swift"; sourceTree = "<group>"; };
 		2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Edges.swift"; sourceTree = "<group>"; };
+		271965F61FCE273700198BEE /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		272C56211FA924D800A799CE /* Centigrade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centigrade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272C56241FA924D800A799CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		272C56261FA924D800A799CE /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -51,6 +55,8 @@
 		274B7FB21FBBA71E00CEC95E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		274B7FB41FBBA7E600CEC95E /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 		274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.dist.swift; sourceTree = "<group>"; };
+		274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
+		274B7FBA1FBDF67400CEC95E /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
 		276CD5AF1FA926A100D0E46F /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -79,6 +85,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		271965F51FCE1E8000198BEE /* Layout and Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				271965F61FCE273700198BEE /* LoadingState.swift */,
+				2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */,
+				274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */,
+				274B7FBA1FBDF67400CEC95E /* ImageTools.swift */,
+				2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */,
+			);
+			path = "Layout and Utilities";
+			sourceTree = "<group>";
+		};
 		272C56181FA924D800A799CE = {
 			isa = PBXGroup;
 			children = (
@@ -107,9 +125,8 @@
 				274B7FB41FBBA7E600CEC95E /* Secrets.swift */,
 				274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */,
 				272C56241FA924D800A799CE /* AppDelegate.swift */,
-				2700D45A1FABF82F00186C8B /* SafeMapView.swift */,
 				272C56261FA924D800A799CE /* MapViewController.swift */,
-				2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */,
+				271965F51FCE1E8000198BEE /* Layout and Utilities */,
 				272C562B1FA924D800A799CE /* Assets.xcassets */,
 				272C56301FA924D800A799CE /* Info.plist */,
 			);
@@ -266,9 +283,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2700D45B1FABF82F00186C8B /* SafeMapView.swift in Sources */,
+				2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */,
 				274B7FB51FBBA7E600CEC95E /* Secrets.swift in Sources */,
+				274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */,
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
+				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
+				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
 			);

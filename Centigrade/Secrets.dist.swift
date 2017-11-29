@@ -1,5 +1,5 @@
 //
-//  Secrets.swift.dist.swift
+//  Secrets.dist.swift
 //  Centigrade
 //
 //  Created by Paul Herz on 2017-11-14.
