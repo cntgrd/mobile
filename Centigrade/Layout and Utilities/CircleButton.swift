@@ -106,7 +106,6 @@ class CircleButton: UIControl, LoadingState {
 	}
 	
 	private func didSetIcon() {
-		print("didSetIcon")
 		highlightView.backgroundColor = tintColor.withAlphaComponent(0.3)
 		
 		guard let icon = icon else {

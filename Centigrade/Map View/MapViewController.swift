@@ -12,8 +12,7 @@ import MapKit
 class MapViewController: UIViewController {
 	
 	var mapView: MKMapView!
-	var locationButton: MKUserTrackingButton!
-	var testCircle: CircleButton!
+	var locationButton: CircleButton!
 	
 	lazy var locationManager: CLLocationManager = CLLocationManager()
 	
@@ -29,30 +28,26 @@ class MapViewController: UIViewController {
 		}()
 		view.addSubview(mapView)
 		
-//		locationButton = {
-//			let b = MKUserTrackingButton(mapView: self.mapView!)
-//			b.translatesAutoresizingMaskIntoConstraints = false
-//			return b
-//		}()
-//		view.addSubview(locationButton)
-//		locationButton.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
-//		locationButton.rightAnchor.constraint(equalTo: margins.rightAnchor).isActive = true
-		
-		testCircle = {
+		locationButton = {
 			let c = CircleButton()
 			c.translatesAutoresizingMaskIntoConstraints = false
 			c.backgroundColor = view.tintColor
 			c.tintColor = .white
 			c.icon = UIImage(imageLiteralResourceName: "location")
+			c.addTarget(self, action: #selector(didPressLocationButton(sender:)), for: .touchUpInside)
 			return c
 		}()
-		view.addSubview(testCircle)
+		view.addSubview(locationButton)
 		
+	}
+	
+	@objc func didPressLocationButton(sender: Any?) {
+		mapView.setUserTrackingMode(.follow, animated: true)
 	}
 
 	override func updateViewConstraints() {
 		mapView.constrainEdgesToSuperview()
-		testCircle.constrainEdgesToSuperview([.top, .trailing], usingMargins: true)
+		locationButton.constrainEdgesToSuperview([.top, .trailing], usingMargins: true)
 		super.updateViewConstraints()
 	}
 	

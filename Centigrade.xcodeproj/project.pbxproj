@@ -18,6 +18,11 @@
 		274B7FB51FBBA7E600CEC95E /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FB41FBBA7E600CEC95E /* Secrets.swift */; };
 		274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */; };
 		274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FBA1FBDF67400CEC95E /* ImageTools.swift */; };
+		275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5D1FE99AB20045F172 /* StateMachine.swift */; };
+		275B6A601FE9A2510045F172 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5F1FE9A2510045F172 /* HashablePair.swift */; };
+		275B6A621FE9AABF0045F172 /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A611FE9AABF0045F172 /* StateMachineTests.swift */; };
+		275B6A631FE9ABA10045F172 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5D1FE99AB20045F172 /* StateMachine.swift */; };
+		275B6A641FE9B6BE0045F172 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5F1FE9A2510045F172 /* HashablePair.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +62,9 @@
 		274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.dist.swift; sourceTree = "<group>"; };
 		274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		274B7FBA1FBDF67400CEC95E /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
+		275B6A5D1FE99AB20045F172 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
+		275B6A5F1FE9A2510045F172 /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
+		275B6A611FE9AABF0045F172 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
 		276CD5AF1FA926A100D0E46F /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +96,8 @@
 		271965F51FCE1E8000198BEE /* Layout and Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				275B6A5D1FE99AB20045F172 /* StateMachine.swift */,
+				275B6A5F1FE9A2510045F172 /* HashablePair.swift */,
 				271965F61FCE273700198BEE /* LoadingState.swift */,
 				2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */,
 				274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */,
@@ -125,7 +135,7 @@
 				274B7FB41FBBA7E600CEC95E /* Secrets.swift */,
 				274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */,
 				272C56241FA924D800A799CE /* AppDelegate.swift */,
-				272C56261FA924D800A799CE /* MapViewController.swift */,
+				275B6A5A1FE995CF0045F172 /* Map View */,
 				271965F51FCE1E8000198BEE /* Layout and Utilities */,
 				272C562B1FA924D800A799CE /* Assets.xcassets */,
 				272C56301FA924D800A799CE /* Info.plist */,
@@ -137,6 +147,7 @@
 			isa = PBXGroup;
 			children = (
 				272C56391FA924D800A799CE /* CentigradeTests.swift */,
+				275B6A611FE9AABF0045F172 /* StateMachineTests.swift */,
 				272C563B1FA924D900A799CE /* Info.plist */,
 			);
 			path = CentigradeTests;
@@ -149,6 +160,14 @@
 				272C56461FA924D900A799CE /* Info.plist */,
 			);
 			path = CentigradeUITests;
+			sourceTree = "<group>";
+		};
+		275B6A5A1FE995CF0045F172 /* Map View */ = {
+			isa = PBXGroup;
+			children = (
+				272C56261FA924D800A799CE /* MapViewController.swift */,
+			);
+			path = "Map View";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +305,9 @@
 				2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */,
 				274B7FB51FBBA7E600CEC95E /* Secrets.swift in Sources */,
 				274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */,
+				275B6A601FE9A2510045F172 /* HashablePair.swift in Sources */,
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
+				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
 				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
@@ -298,7 +319,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				275B6A641FE9B6BE0045F172 /* HashablePair.swift in Sources */,
+				275B6A631FE9ABA10045F172 /* StateMachine.swift in Sources */,
 				272C563A1FA924D800A799CE /* CentigradeTests.swift in Sources */,
+				275B6A621FE9AABF0045F172 /* StateMachineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
