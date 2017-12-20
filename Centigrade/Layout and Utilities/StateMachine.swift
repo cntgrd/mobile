@@ -16,15 +16,10 @@ protocol States: Hashable {}
 
 class StateMachine<S: States> {
 	
-	private var _state: S {
-		didSet {
-			print("didSet _state to \(_state)")
-		}
-	}
+	private var _state: S
 	
 	var state: S {
 		set(newState) {
-			print("SETTING STATE")
 			try! transition(to: newState)
 		}
 		get {
