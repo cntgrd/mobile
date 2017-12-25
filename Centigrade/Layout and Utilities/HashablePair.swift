@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct HashablePair<FirstType: Hashable, SecondType: Hashable>: Hashable {
+public struct HashablePair<FirstType: Hashable, SecondType: Hashable>: Hashable {
 	let first: FirstType
 	let second: SecondType
 	init(_ first: FirstType, _ second: SecondType) {
 		self.first = first
 		self.second = second
 	}
-	var hashValue: Int {
+	public var hashValue: Int {
 		get {
 			// Truncates both hash values to 16 bits,
 			// then "appends" {firstHash}{secondHash}
@@ -30,7 +30,7 @@ struct HashablePair<FirstType: Hashable, SecondType: Hashable>: Hashable {
 		}
 	}
 	
-	static func ==(lhs: HashablePair<FirstType,SecondType>, rhs: HashablePair<FirstType,SecondType>) -> Bool {
+	public static func ==(lhs: HashablePair<FirstType,SecondType>, rhs: HashablePair<FirstType,SecondType>) -> Bool {
 		return lhs.first == rhs.first && lhs.second == rhs.second
 	}
 }

@@ -47,7 +47,7 @@ class MapViewController: UIViewController {
 
 	override func updateViewConstraints() {
 		mapView.constrainEdgesToSuperview()
-		locationButton.constrainEdgesToSuperview([.top, .trailing], usingMargins: true)
+		locationButton.constrainEdgesToSuperview([.top, .trailing], inset: 10, usingMargins: true)
 		super.updateViewConstraints()
 	}
 	
