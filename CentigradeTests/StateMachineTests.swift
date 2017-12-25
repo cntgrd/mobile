@@ -73,7 +73,13 @@ class StateMachineTests: XCTestCase {
 	}
 	
 	func testInvalidTransitions() {
-		XCTFail("Test not implemented.")
+		let stateMachine = StateMachineTests.makeEdgeStateMachine()
+		XCTAssertThrowsError(
+			try stateMachine.transition(to: .friday),
+			"The StateMachine allowed an illegal transition .monday to .friday."
+		) { error in
+			print(error)
+		}
 	}
 	
 	func testGraphViz() {
