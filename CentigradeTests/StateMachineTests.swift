@@ -16,12 +16,21 @@ import XCTest
 
 class StateMachineTests: XCTestCase {
 	
+	var notificationCenter: NotificationCenter = NotificationCenter()
+	
+	let edgeHandlerNotfication = Notification.Name("me.cntgrd.CentigradeTests.StateMachineTests.edgeHandlerNotification")
+	let eventHandlerNotification = Notification.Name("me.cntgrd.CentigradeTests.StateMachineTests.eventHandlerNotification")
+	
 	enum DaysOfTheWeek: States {
 		case monday, tuesday, wednesday, thursday, friday, saturday, sunday
 		static let allItems: [DaysOfTheWeek] = [.monday, .tuesday, .wednesday, .thursday, .friday, .saturday, .sunday]
 	}
 	
-	static func makeEdgeStateMachine() -> StateMachine<DaysOfTheWeek> {
+	enum DaysOfTheWeekEvents: Events {
+		case next
+	}
+	
+	func makeEdgeStateMachine() -> StateMachine<DaysOfTheWeek> {
 		let stateMachine = StateMachine<DaysOfTheWeek>(state: .monday)
 		
 		// Not off-by-one. Goes until the index of the penultimate item
@@ -32,9 +41,23 @@ class StateMachineTests: XCTestCase {
 			let fromState = DaysOfTheWeek.allItems[i]
 			let toState = DaysOfTheWeek.allItems[(i+1) % len]
 			stateMachine.connect(fromState, to: toState) {
-				print("Transition \(fromState) -> \(toState)")
+				NotificationCenter.default.post(name: self.edgeHandlerNotfication, object: self)
 			}
 		}
+		return stateMachine
+	}
+	
+	static func makeEventStateMachine() -> EventStateMachine<DaysOfTheWeek, DaysOfTheWeekEvents> {
+		let stateMachine = EventStateMachine<DaysOfTheWeek, DaysOfTheWeekEvents>(state: .monday)
+		stateMachine.on(event: .next, transitions: [
+			.monday:    .tuesday,
+			.tuesday:   .wednesday,
+			.wednesday: .thursday,
+			.thursday:  .friday,
+			.friday:    .saturday,
+			.saturday:  .sunday,
+			.sunday:    .monday
+		])
 		return stateMachine
 	}
     
@@ -46,15 +69,20 @@ class StateMachineTests: XCTestCase {
         super.tearDown()
     }
     
-    func testInitialization() {
+    func testEdgeInitialization() {
 		// StateMachine(state: .someState) should initialize the state to .someState.
-		let stateMachine = StateMachineTests.makeEdgeStateMachine()
-		XCTAssertEqual(stateMachine.state, .monday, "The StateMachine was given an initial state, but the .state property was not set as expected.")
+		let stateMachine = makeEdgeStateMachine()
+		XCTAssertEqual(stateMachine.state, .monday, "The edge-based StateMachine was given an initial state, but the .state property was not set as expected.")
     }
+	
+	func testEventInitialization() {
+		let stateMachine = StateMachineTests.makeEventStateMachine()
+		XCTAssertEqual(stateMachine.state, .monday, "The event-based StateMachine was given an initial state, but the .state property was not set as expected.")
+	}
 	
 	func testValidTransitions() {
 		// iterate tuesday...sunday,monday (assuming initial state is monday)
-		let stateMachine = StateMachineTests.makeEdgeStateMachine()
+		let stateMachine = makeEdgeStateMachine()
 		
 		for i in 1..<DaysOfTheWeek.allItems.count {
 			let oldState = stateMachine.state
@@ -73,7 +101,7 @@ class StateMachineTests: XCTestCase {
 	}
 	
 	func testInvalidTransitions() {
-		let stateMachine = StateMachineTests.makeEdgeStateMachine()
+		let stateMachine = makeEdgeStateMachine()
 		XCTAssertThrowsError(
 			try stateMachine.transition(to: .friday),
 			"The StateMachine allowed an illegal transition .monday to .friday."
@@ -82,8 +110,32 @@ class StateMachineTests: XCTestCase {
 		}
 	}
 	
+	func testEdgeHandlers() {
+		
+	}
+	
+	func testEventHandlers() {
+		let expectation = XCTNSNotificationExpectation(
+			name: eventHandlerNotification,
+			object: self,
+			notificationCenter: notificationCenter
+		)
+		
+		let stateMachine = StateMachineTests.makeEventStateMachine()
+		stateMachine.on(event: .next) {
+			self.notificationCenter.post(
+				name: self.eventHandlerNotification,
+				object: self
+			)
+		}
+		
+		try! stateMachine.trigger(event: .next)
+		
+		wait(for: [expectation], timeout: 0)
+	}
+	
 	func testGraphViz() {
-		let stateMachine = StateMachineTests.makeEdgeStateMachine()
+		let stateMachine = makeEdgeStateMachine()
 		let output = stateMachine.toGraphViz()
 		print(output)
 		XCTAssertNotEqual(output, "")

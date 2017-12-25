@@ -104,13 +104,15 @@ public class EventStateMachine<S: States, E: Events> {
 			throw StateMachineError.unhandledEventError
 		}
 		
+		// define the edge before we overwrite _state
+		let edge = StateEdge(_state, nextState)
+		
 		// State set BEFORE handlers to prevent races.
 		// We set _state directly to avoid valid edge checking, because
 		// a defined route for an event overrides defined valid edges.
 		_state = nextState
 		
 		// Call edge handler if it exists but otherwise do nothing
-		let edge = StateEdge(state, nextState)
 		if let edgeHandler: Handler? = edgeHandlers[edge] {
 			edgeHandler?()
 		}
