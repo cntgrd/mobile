@@ -33,9 +33,6 @@ public class EventStateMachine<S: States, E: Events> {
 	private var _state: S
 	
 	public var state: S {
-		set(newState) {
-			try! transition(to: newState)
-		}
 		get {
 			return _state
 		}
@@ -47,6 +44,11 @@ public class EventStateMachine<S: States, E: Events> {
 	public typealias StateEdge = HashablePair<S,S>
 	
 	public typealias Handler = () -> ()
+	
+	// Whenever the state becomes S,
+	// trigger this handler. Doesn't matter if
+	// it's not there for state validity
+	private var stateHandlers = [S: Handler]()
 	
 	// To get the handler for the transition A -> B,
 	// it's edgeHandlers[StateEdge(A,B)]
@@ -83,6 +85,10 @@ public class EventStateMachine<S: States, E: Events> {
 		}
 	}
 	
+	public func when(stateBecomes state: S, handler: @escaping Handler) {
+		stateHandlers[state] = handler
+	}
+	
 	// Event-based transitioning:
 	//
 	// given an event E, checks eventHandlers for a key == E,
@@ -97,10 +103,10 @@ public class EventStateMachine<S: States, E: Events> {
 	// (the key). If the current state is not in that dictionary,
 	// this will throw an error.
 	public func trigger(event: E) throws {
-		guard let transitions = eventTransitions[event] else {
-			throw StateMachineError.unhandledEventError
-		}
-		guard let nextState = transitions[self.state] else {
+		guard
+			let transitions = eventTransitions[event],
+			let nextState = transitions[self.state]
+		else {
 			throw StateMachineError.unhandledEventError
 		}
 		
@@ -123,6 +129,10 @@ public class EventStateMachine<S: States, E: Events> {
 		// so entries are never nil if the key exists.)
 		if let eventHandler: Handler = eventHandlers[event] {
 			eventHandler()
+		}
+		
+		if let stateHandler: Handler = stateHandlers[nextState] {
+			stateHandler()
 		}
 	}
 	
@@ -163,6 +173,10 @@ public class EventStateMachine<S: States, E: Events> {
 		}
 		
 		self._state = newState
+		
+		if let stateHandler: Handler = stateHandlers[newState] {
+			stateHandler()
+		}
 	}
 	
 	public func toGraphViz() -> String {

@@ -11,7 +11,10 @@ import MapKit
 
 class MapViewController: UIViewController {
 	
+	
+	
 	var mapView: MKMapView!
+	
 	var locationButton: CircleButton!
 	
 	lazy var locationManager: CLLocationManager = CLLocationManager()
@@ -22,6 +25,7 @@ class MapViewController: UIViewController {
 		locationManager.requestWhenInUseAuthorization()
 		mapView = {
 			let m = MKMapView()
+			m.showsCompass = false
 			m.attributionLabel.isHidden = true
 			m.translatesAutoresizingMaskIntoConstraints = false
 			return m
@@ -29,20 +33,11 @@ class MapViewController: UIViewController {
 		view.addSubview(mapView)
 		
 		locationButton = {
-			let c = CircleButton()
+			let c = CircleUserTrackingButton(mapView: self.mapView)
 			c.translatesAutoresizingMaskIntoConstraints = false
-			c.backgroundColor = view.tintColor
-			c.tintColor = .white
-			c.icon = UIImage(imageLiteralResourceName: "location")
-			c.addTarget(self, action: #selector(didPressLocationButton(sender:)), for: .touchUpInside)
 			return c
 		}()
 		view.addSubview(locationButton)
-		
-	}
-	
-	@objc func didPressLocationButton(sender: Any?) {
-		mapView.setUserTrackingMode(.follow, animated: true)
 	}
 
 	override func updateViewConstraints() {

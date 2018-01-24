@@ -18,8 +18,8 @@ class StateMachineTests: XCTestCase {
 	
 	var notificationCenter: NotificationCenter = NotificationCenter()
 	
-	let edgeHandlerNotfication = Notification.Name("me.cntgrd.CentigradeTests.StateMachineTests.edgeHandlerNotification")
-	let eventHandlerNotification = Notification.Name("me.cntgrd.CentigradeTests.StateMachineTests.eventHandlerNotification")
+	static let edgeHandlerNotfication = Notification.Name("me.cntgrd.CentigradeTests.StateMachineTests.edgeHandlerNotification")
+	static let eventHandlerNotification = Notification.Name("me.cntgrd.CentigradeTests.StateMachineTests.eventHandlerNotification")
 	
 	enum DaysOfTheWeek: States {
 		case monday, tuesday, wednesday, thursday, friday, saturday, sunday
@@ -28,9 +28,10 @@ class StateMachineTests: XCTestCase {
 	
 	enum DaysOfTheWeekEvents: Events {
 		case next
+		case dummyEvent
 	}
 	
-	func makeEdgeStateMachine() -> StateMachine<DaysOfTheWeek> {
+	static func makeEdgeStateMachine() -> StateMachine<DaysOfTheWeek> {
 		let stateMachine = StateMachine<DaysOfTheWeek>(state: .monday)
 		
 		// Not off-by-one. Goes until the index of the penultimate item
@@ -41,7 +42,7 @@ class StateMachineTests: XCTestCase {
 			let fromState = DaysOfTheWeek.allItems[i]
 			let toState = DaysOfTheWeek.allItems[(i+1) % len]
 			stateMachine.connect(fromState, to: toState) {
-				NotificationCenter.default.post(name: self.edgeHandlerNotfication, object: self)
+				NotificationCenter.default.post(name: StateMachineTests.edgeHandlerNotfication, object: self)
 			}
 		}
 		return stateMachine
@@ -71,7 +72,7 @@ class StateMachineTests: XCTestCase {
     
     func testEdgeInitialization() {
 		// StateMachine(state: .someState) should initialize the state to .someState.
-		let stateMachine = makeEdgeStateMachine()
+		let stateMachine = StateMachineTests.makeEdgeStateMachine()
 		XCTAssertEqual(stateMachine.state, .monday, "The edge-based StateMachine was given an initial state, but the .state property was not set as expected.")
     }
 	
@@ -82,7 +83,7 @@ class StateMachineTests: XCTestCase {
 	
 	func testValidTransitions() {
 		// iterate tuesday...sunday,monday (assuming initial state is monday)
-		let stateMachine = makeEdgeStateMachine()
+		let stateMachine = StateMachineTests.makeEdgeStateMachine()
 		
 		for i in 1..<DaysOfTheWeek.allItems.count {
 			let oldState = stateMachine.state
@@ -101,7 +102,7 @@ class StateMachineTests: XCTestCase {
 	}
 	
 	func testInvalidTransitions() {
-		let stateMachine = makeEdgeStateMachine()
+		let stateMachine = StateMachineTests.makeEdgeStateMachine()
 		XCTAssertThrowsError(
 			try stateMachine.transition(to: .friday),
 			"The StateMachine allowed an illegal transition .monday to .friday."
@@ -110,13 +111,53 @@ class StateMachineTests: XCTestCase {
 		}
 	}
 	
-	func testEdgeHandlers() {
+	/*func testEdgeHandlers() {
+		let expectation = XCTNSNotificationExpectation(
+			name: StateMachineTests.edgeHandlerNotfication,
+			object: self,
+			notificationCenter: notificationCenter
+		)
 		
+		let stateMachine = StateMachineTests.makeEdgeStateMachine()
+		
+		for i in 1..<DaysOfTheWeek.allItems.count {
+			let oldState = stateMachine.state
+			let newState = DaysOfTheWeek.allItems[i]
+			print("Attempting \(oldState) -> \(newState)")
+			// Make sure legal state transitions do not throw
+			do {
+				wait(for: [expectation], timeout: 0)
+				try stateMachine.transition(to: newState)
+			} catch {
+				XCTFail("The StateMachine threw an error while making a legal transition between states: \(oldState) -> \(newState).")
+			}
+		}
+	}*/
+	
+	func testValidEvents() {
+		let stateMachine = StateMachineTests.makeEventStateMachine()
+		for _ in 0..<7 {
+			do {
+				try stateMachine.trigger(event: .next)
+			} catch {
+				XCTFail("The StateMachine threw an error while processing a legal event (.next)")
+			}
+		}
+	}
+	
+	func testInvalidEvents() {
+		let stateMachine = StateMachineTests.makeEventStateMachine()
+		XCTAssertThrowsError(
+			try stateMachine.trigger(event: .dummyEvent),
+			"The StateMachine allowed an unregistered event (.dummyEvent)."
+		) { error in
+			print(error)
+		}
 	}
 	
 	func testEventHandlers() {
 		let expectation = XCTNSNotificationExpectation(
-			name: eventHandlerNotification,
+			name: StateMachineTests.eventHandlerNotification,
 			object: self,
 			notificationCenter: notificationCenter
 		)
@@ -124,18 +165,20 @@ class StateMachineTests: XCTestCase {
 		let stateMachine = StateMachineTests.makeEventStateMachine()
 		stateMachine.on(event: .next) {
 			self.notificationCenter.post(
-				name: self.eventHandlerNotification,
+				name: StateMachineTests.eventHandlerNotification,
 				object: self
 			)
 		}
 		
-		try! stateMachine.trigger(event: .next)
-		
-		wait(for: [expectation], timeout: 0)
+		// monday -> tuesday, sunday -> monday
+		for _ in 0..<7 {
+			try! stateMachine.trigger(event: .next)
+			wait(for: [expectation], timeout: 0)
+		}
 	}
 	
 	func testGraphViz() {
-		let stateMachine = makeEdgeStateMachine()
+		let stateMachine = StateMachineTests.makeEdgeStateMachine()
 		let output = stateMachine.toGraphViz()
 		print(output)
 		XCTAssertNotEqual(output, "")

@@ -23,6 +23,7 @@
 		275B6A621FE9AABF0045F172 /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A611FE9AABF0045F172 /* StateMachineTests.swift */; };
 		275B6A631FE9ABA10045F172 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5D1FE99AB20045F172 /* StateMachine.swift */; };
 		275B6A641FE9B6BE0045F172 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5F1FE9A2510045F172 /* HashablePair.swift */; };
+		276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		275B6A5D1FE99AB20045F172 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		275B6A5F1FE9A2510045F172 /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		275B6A611FE9AABF0045F172 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
+		276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleUserTrackingButton.swift; sourceTree = "<group>"; };
 		276CD5AF1FA926A100D0E46F /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				272C56261FA924D800A799CE /* MapViewController.swift */,
+				276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */,
 			);
 			path = "Map View";
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
 				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,
+				276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
 			);
