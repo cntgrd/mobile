@@ -48,10 +48,12 @@ class CircleUserTrackingButton: CircleButton {
 		}
 		buttonStateMachine.when(stateBecomes: .trackingLocation) {
 			self.mapView?.setUserTrackingMode(.follow, animated: true)
+			self.mapView?.showsUserLocation = true
 			self.updateStyle(forState: .trackingLocation)
 		}
 		buttonStateMachine.when(stateBecomes: .trackingOrientation) {
 			self.mapView?.setUserTrackingMode(.followWithHeading, animated: true)
+			self.mapView?.showsUserLocation = true
 			self.updateStyle(forState: .trackingOrientation)
 		}
 	}

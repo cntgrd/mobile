@@ -11,11 +11,9 @@ import MapKit
 
 class MapViewController: UIViewController {
 	
-	
-	
 	var mapView: MKMapView!
-	
 	var locationButton: CircleButton!
+	var cardView: UIView!
 	
 	lazy var locationManager: CLLocationManager = CLLocationManager()
 	
@@ -38,6 +36,14 @@ class MapViewController: UIViewController {
 			return c
 		}()
 		view.addSubview(locationButton)
+		
+		cardView = {
+			let v = UIView()
+			v.translatesAutoresizingMaskIntoConstraints = false
+			v.backgroundColor = .red
+			return v
+		}()
+		view.addSubview(cardView)
 	}
 
 	override func updateViewConstraints() {
