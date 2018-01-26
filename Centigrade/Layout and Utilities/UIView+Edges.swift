@@ -141,7 +141,15 @@ extension UIView {
 	
 	func constrainToSize(_ size: CGSize) {
 		self.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-		self.heightAnchor.constraint(equalToConstant: size.height).isActive = true
+		self.constrainToHeight(size.height)
+	}
+	
+	func constrainToWidth(_ width: CGFloat) {
+		self.widthAnchor.constraint(equalToConstant: width).isActive = true
+	}
+	
+	func constrainToHeight(_ height: CGFloat) {
+		self.heightAnchor.constraint(equalToConstant: height).isActive = true
 	}
 	
 	func makeConstraintBelow(view other: UIView, offset: CGFloat = 0.0) -> NSLayoutConstraint {
