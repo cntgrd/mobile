@@ -53,7 +53,6 @@ class MapViewController: UIViewController {
 		
 		locationButton.constrainEdgesToSuperview([.trailing], inset: 15, usingMargins: false)
 		locationButton.constrainEdgesToSuperview([.top], inset: 10, usingMargins: true)
-		locationButton.constrainToSize(CGSize(width: 300, height: 300))
 		
 		cardView.constrainEdgesToSuperview([.leading, .trailing], inset: 0, usingMargins: false)
 		cardView.constrainEdgesToSuperview([.bottom], inset: 15, usingMargins: true)

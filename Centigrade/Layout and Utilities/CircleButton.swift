@@ -31,7 +31,7 @@ class CircleButton: UIControl, LoadingState {
 		return CGSize(width: size, height: size)
 	}
 	
-	var size: CGFloat = 15 {
+	var size: CGFloat = 50 {
 		didSet {
 			invalidateIntrinsicContentSize()
 		}
