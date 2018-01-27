@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
 	
 	var mapView: MKMapView!
 	var locationButton: CircleButton!
-	var cardView: UICollectionView!
+	var cardView: CardView!
 	
 	lazy var locationManager: CLLocationManager = CLLocationManager()
 	
@@ -38,16 +38,10 @@ class MapViewController: UIViewController {
 		view.addSubview(locationButton)
 		
 		cardView = {
-			let v = UICollectionView(frame: .zero, collectionViewLayout: CardScrollLayout())
+			let v = CardView(size: CGSize(width: 200, height: 250))
 			v.translatesAutoresizingMaskIntoConstraints = false
-			v.layer.masksToBounds = false
 			v.dataSource = self
-			v.delegate = self
-			v.backgroundColor = .clear
-			v.bounces = true
-			v.showsHorizontalScrollIndicator = false
-			v.showsVerticalScrollIndicator = false
-			v.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "card")
+			v.register(CardCell.self, forCellWithReuseIdentifier: "cell")
 			return v
 		}()
 		view.addSubview(cardView)
@@ -72,27 +66,17 @@ class MapViewController: UIViewController {
 	}
 }
 
-extension MapViewController: UICollectionViewDelegate {}
-
-extension MapViewController: UICollectionViewDelegateFlowLayout {
-	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: 200, height: 250)
-	}
-}
-
 extension MapViewController: UICollectionViewDataSource {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 5
 	}
-	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let card = collectionView.dequeueReusableCell(withReuseIdentifier: "card", for: indexPath)
-		card.contentView.backgroundColor = .white
-		card.layer.masksToBounds = false
-		card.layer.shadowOffset = CGSize(width: 0, height: 5)
-		card.layer.shadowRadius = 8
-		card.layer.shadowOpacity = 0.5
-		return card
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+		cell.backgroundColor = .red
+		return cell
 	}
 }
+
+
+
 
