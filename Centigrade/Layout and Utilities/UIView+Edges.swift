@@ -144,6 +144,10 @@ extension UIView {
 		self.constrainToHeight(size.height)
 	}
 	
+	func constrainToAspectRatio(_ ratio: CGFloat) {
+		self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: ratio).isActive = true
+	}
+	
 	func constrainToWidth(_ width: CGFloat) {
 		self.widthAnchor.constraint(equalToConstant: width).isActive = true
 	}

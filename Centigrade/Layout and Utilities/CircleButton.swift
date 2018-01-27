@@ -27,15 +27,19 @@ class CircleButton: UIControl, LoadingState {
 		}
 	}
 	
-	private let size: CGFloat = 50.0
+	override var intrinsicContentSize: CGSize {
+		return CGSize(width: size, height: size)
+	}
+	
+	var size: CGFloat = 15 {
+		didSet {
+			invalidateIntrinsicContentSize()
+		}
+	}
 	
 	private var iconView: UIImageView!
 	private var loadingView: UIActivityIndicatorView!
 	private var highlightView: UIView!
-	
-	override var intrinsicContentSize: CGSize {
-		return CGSize(width: size, height: size)
-	}
 	
 	override var tintColor: UIColor! {
 		didSet { didSetIcon() }
@@ -134,5 +138,10 @@ class CircleButton: UIControl, LoadingState {
 		} else {
 			sendActions(for: .touchUpOutside)
 		}
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		iconView.layer.cornerRadius = bounds.width / 2.0
 	}
 }

@@ -15,7 +15,7 @@ class CircleUserTrackingButton: CircleButton {
 	
 	private typealias ButtonStateMachine = EventStateMachine<TrackingButtonStates, TrackingButtonEvents>
 	
-	private enum TrackingButtonStates: States { case noTracking, trackingLocation, trackingOrientation }
+	private enum TrackingButtonStates: States { case noTracking, trackingLocation/*, trackingOrientation*/ }
 	private enum TrackingButtonEvents: Events { case push }
 	
 	private let mapView: MKMapView?
@@ -38,8 +38,11 @@ class CircleUserTrackingButton: CircleButton {
 	private func setupStateMachine() {
 		buttonStateMachine.on(event: .push, transitions: [
 			.noTracking: .trackingLocation,
+			/*
 			.trackingLocation: .trackingOrientation,
 			.trackingOrientation: .noTracking
+			*/
+			.trackingLocation: .noTracking
 			])
 		buttonStateMachine.when(stateBecomes: .noTracking) {
 			self.mapView?.setUserTrackingMode(.none, animated: true)
@@ -51,11 +54,13 @@ class CircleUserTrackingButton: CircleButton {
 			self.mapView?.showsUserLocation = true
 			self.updateStyle(forState: .trackingLocation)
 		}
+		/*
 		buttonStateMachine.when(stateBecomes: .trackingOrientation) {
 			self.mapView?.setUserTrackingMode(.followWithHeading, animated: true)
 			self.mapView?.showsUserLocation = true
 			self.updateStyle(forState: .trackingOrientation)
 		}
+		*/
 	}
 	
 	private func updateStyle(forState state: TrackingButtonStates) {
@@ -68,9 +73,11 @@ class CircleUserTrackingButton: CircleButton {
 		case .trackingLocation:
 			c.backgroundColor = defaultBlue
 			c.icon = UIImage(imageLiteralResourceName: "location")
+		/*
 		case .trackingOrientation:
 			c.backgroundColor = .red
 			c.icon = UIImage(imageLiteralResourceName: "location")
+		*/
 		}
 	}
 	
