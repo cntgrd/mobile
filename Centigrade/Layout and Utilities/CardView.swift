@@ -11,11 +11,15 @@ import UIKit
 class CardCell: UICollectionViewCell {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		contentView.backgroundColor = .white
-		layer.masksToBounds = false
-		layer.shadowOffset = CGSize(width: 0, height: 5)
-		layer.shadowRadius = 8
-		layer.shadowOpacity = 0.5
+		backgroundView = {
+			let v = UIView()
+			v.backgroundColor = .white
+			v.layer.masksToBounds = false
+			v.layer.shadowOffset = CGSize(width: 0, height: 5)
+			v.layer.shadowRadius = 8
+			v.layer.shadowOpacity = 0.5
+			return v
+		}()
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
