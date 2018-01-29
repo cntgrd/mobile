@@ -38,7 +38,7 @@ class CardView: UICollectionView {
 			return flowLayout.minimumLineSpacing
 		}
 		set {
-			flowLayout.sectionInset = UIEdgeInsets(top: 0, left: newValue, bottom: 0, right: newValue+20)
+			flowLayout.sectionInset = UIEdgeInsets(top: 0, left: newValue, bottom: 0, right: newValue)
 			flowLayout.minimumLineSpacing = newValue
 		}
 	}

@@ -18,7 +18,7 @@ class ConditionCardCell: CardCell {
 		testLabel = {
 			let l = UILabel()
 			l.backgroundColor = .yellow
-//			l.translatesAutoresizingMaskIntoConstraints = false
+			l.translatesAutoresizingMaskIntoConstraints = false
 			l.text = "Hello"
 			return l
 		}()
