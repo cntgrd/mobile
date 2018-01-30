@@ -30,6 +30,10 @@
 		276A4E7E201AD03E00A441E7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E7D201AD03E00A441E7 /* CardView.swift */; };
 		27C80733201CF7F500A1D5C8 /* MainConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C80732201CF7F500A1D5C8 /* MainConditionView.swift */; };
 		27C80735201CFB5E00A1D5C8 /* ConditionCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C80734201CFB5E00A1D5C8 /* ConditionCardCell.swift */; };
+		27C80737201FE1AA00A1D5C8 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27C80736201FE1AA00A1D5C8 /* Cartfile */; };
+		27D267D8201FE8E6007A2FCB /* Static.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27D267D7201FE8E6007A2FCB /* Static.framework */; };
+		27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */; };
+		27D267E02021292C007A2FCB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D267DF2021292C007A2FCB /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +84,10 @@
 		276CD5AF1FA926A100D0E46F /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		27C80732201CF7F500A1D5C8 /* MainConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConditionView.swift; sourceTree = "<group>"; };
 		27C80734201CFB5E00A1D5C8 /* ConditionCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionCardCell.swift; sourceTree = "<group>"; };
+		27C80736201FE1AA00A1D5C8 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		27D267D7201FE8E6007A2FCB /* Static.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Static.framework; path = Carthage/Build/iOS/Static.framework; sourceTree = "<group>"; };
+		27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
+		27D267DF2021292C007A2FCB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27D267D8201FE8E6007A2FCB /* Static.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,12 +136,14 @@
 		272C56181FA924D800A799CE = {
 			isa = PBXGroup;
 			children = (
+				27C80736201FE1AA00A1D5C8 /* Cartfile */,
 				276CD5AF1FA926A100D0E46F /* .travis.yml */,
 				274B7FB21FBBA71E00CEC95E /* .gitignore */,
 				272C56231FA924D800A799CE /* Centigrade */,
 				272C56381FA924D800A799CE /* CentigradeTests */,
 				272C56431FA924D900A799CE /* CentigradeUITests */,
 				272C56221FA924D800A799CE /* Products */,
+				27D267D6201FE8E6007A2FCB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +163,7 @@
 				274B7FB41FBBA7E600CEC95E /* Secrets.swift */,
 				274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */,
 				272C56241FA924D800A799CE /* AppDelegate.swift */,
+				27D267D9201FE8F1007A2FCB /* App Settings View */,
 				275B6A5A1FE995CF0045F172 /* Map View */,
 				27C80731201CF7C800A1D5C8 /* Weather Condition Views */,
 				271965F51FCE1E8000198BEE /* Layout and Utilities */,
@@ -185,6 +197,7 @@
 			children = (
 				272C56261FA924D800A799CE /* MapViewController.swift */,
 				276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */,
+				27D267DF2021292C007A2FCB /* MapView.swift */,
 			);
 			path = "Map View";
 			sourceTree = "<group>";
@@ -199,6 +212,22 @@
 			path = "Weather Condition Views";
 			sourceTree = "<group>";
 		};
+		27D267D6201FE8E6007A2FCB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				27D267D7201FE8E6007A2FCB /* Static.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		27D267D9201FE8F1007A2FCB /* App Settings View */ = {
+			isa = PBXGroup;
+			children = (
+				27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */,
+			);
+			path = "App Settings View";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -209,6 +238,7 @@
 				272C561D1FA924D800A799CE /* Sources */,
 				272C561E1FA924D800A799CE /* Frameworks */,
 				272C561F1FA924D800A799CE /* Resources */,
+				27D267DC201FEA13007A2FCB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -306,6 +336,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27C80737201FE1AA00A1D5C8 /* Cartfile in Resources */,
 				272C562C1FA924D800A799CE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +356,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		27D267DC201FEA13007A2FCB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Static.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		272C561D1FA924D800A799CE /* Sources */ = {
@@ -346,8 +394,10 @@
 				276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */,
 				276A4E78201AB93500A441E7 /* ConditionCardModel.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
+				27D267E02021292C007A2FCB /* MapView.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
 				276A4E7A201AB95000A441E7 /* ModellableView.swift in Sources */,
+				27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -500,6 +550,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8MME6Q9DA;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Centigrade/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.centigrade.Centigrade;
@@ -517,6 +571,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = M8MME6Q9DA;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Centigrade/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.centigrade.Centigrade;

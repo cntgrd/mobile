@@ -41,10 +41,12 @@ class CircleButton: UIControl, LoadingState {
 	private var loadingView: UIActivityIndicatorView!
 	private var highlightView: UIView!
 	
-	override var tintColor: UIColor! {
+	static let defaultIconColor = UIColor(white: 0.3, alpha: 1)
+	var iconColor: UIColor = CircleButton.defaultIconColor {
 		didSet { didSetIcon() }
 	}
 	
+	static let defaultBackgroundColor: UIColor = UIColor(white: 0.9, alpha: 1)
 	override var backgroundColor: UIColor? {
 		set {
 			iconView.backgroundColor = newValue
@@ -79,7 +81,7 @@ class CircleButton: UIControl, LoadingState {
 			c.contentMode = .center
 			c.frame.size = CGSize(width: size, height: size)
 			c.clipsToBounds = true
-			c.backgroundColor = .white
+			c.backgroundColor = CircleButton.defaultBackgroundColor
 			c.layer.cornerRadius = size / 2.0
 			return c
 		}()
@@ -110,14 +112,14 @@ class CircleButton: UIControl, LoadingState {
 	}
 	
 	private func didSetIcon() {
-		highlightView.backgroundColor = tintColor.withAlphaComponent(0.3)
+		highlightView.backgroundColor = iconColor.withAlphaComponent(0.3)
 		
 		guard let icon = icon else {
 			iconView.image = UIImage()
 			return
 		}
 		
-		let tintedIcon = ImageTools.tintIcon(icon, usingColor: tintColor)
+		let tintedIcon = ImageTools.tintIcon(icon, usingColor: iconColor)
 		iconView.image = tintedIcon
 	}
 	

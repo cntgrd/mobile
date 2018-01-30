@@ -26,6 +26,8 @@ class CircleUserTrackingButton: CircleButton {
 		buttonStateMachine = ButtonStateMachine(state: .noTracking)
 		super.init(frame: .zero)
 		
+		iconColor = .white
+		
 		addTarget(self, action: #selector(didPressTrackingButton(sender:)), for: .touchUpInside)
 		setupStateMachine()
 		updateStyle(forState: buttonStateMachine.state)
@@ -65,7 +67,6 @@ class CircleUserTrackingButton: CircleButton {
 	
 	private func updateStyle(forState state: TrackingButtonStates) {
 		let c = self
-		c.tintColor = .white
 		switch state {
 		case .noTracking:
 			c.backgroundColor = defaultBlue

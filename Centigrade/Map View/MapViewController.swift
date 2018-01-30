@@ -12,7 +12,11 @@ import MapKit
 class MapViewController: UIViewController {
 	
 	var mapView: MKMapView!
-	var locationButton: CircleButton!
+	
+	var buttonStack: UIStackView!
+	var locationButton: CircleUserTrackingButton!
+	var appSettingsButton: CircleButton!
+	
 	var cardView: CardView!
 	
 	lazy var locationManager: CLLocationManager = CLLocationManager()
@@ -36,7 +40,21 @@ class MapViewController: UIViewController {
 			c.translatesAutoresizingMaskIntoConstraints = false
 			return c
 		}()
-		view.addSubview(locationButton)
+		
+		appSettingsButton = {
+			let a = CircleButton()
+			a.icon = UIImage(imageLiteralResourceName: "app-settings")
+			return a
+		}()
+		
+		buttonStack = {
+			let s = UIStackView(arrangedSubviews: [locationButton, appSettingsButton])
+			s.translatesAutoresizingMaskIntoConstraints = false
+			s.axis = .vertical
+			s.spacing = 10
+			return s
+		}()
+		view.addSubview(buttonStack)
 		
 		cardView = {
 			let v = CardView(size: CGSize(width: 193, height: 217))
@@ -51,8 +69,11 @@ class MapViewController: UIViewController {
 	override func updateViewConstraints() {
 		mapView.constrainEdgesToSuperview()
 		
-		locationButton.constrainEdgesToSuperview([.trailing], inset: 15, usingMargins: false)
-		locationButton.constrainEdgesToSuperview([.top], inset: 10, usingMargins: true)
+//		locationButton.constrainEdgesToSuperview([.trailing], inset: 15, usingMargins: false)
+//		locationButton.constrainEdgesToSuperview([.top], inset: 10, usingMargins: true)
+		
+		buttonStack.constrainEdgesToSuperview([.trailing], inset: 15, usingMargins: false)
+		buttonStack.constrainEdgesToSuperview([.top], inset: 10, usingMargins: true)
 		
 		cardView.constrainEdgesToSuperview([.leading, .trailing], inset: 0, usingMargins: false)
 		cardView.constrainEdgesToSuperview([.bottom], inset: 15, usingMargins: true)
