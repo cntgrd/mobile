@@ -7,31 +7,35 @@
 //
 
 import UIKit
+import Static
 
-class AppSettingsViewController: UIViewController {
+class AppSettingsViewController: Static.TableViewController {
 	
-	var testLabel: UILabel!
+	init() {
+		super.init(style: .grouped)
+	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		navigationController?.setNavigationBarHidden(false, animated: animated)
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		navigationController?.setNavigationBarHidden(false, animated: false)
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		view.backgroundColor = .white
 		
-		testLabel = {
-			let l = UILabel(frame: .zero)
-			l.text = "Hello World"
-			l.translatesAutoresizingMaskIntoConstraints = false
-			return l
-		}()
-		view.addSubview(testLabel)
+		dataSource.sections = [
+			Static.Section(
+				header: "Temperature",
+				rows: [Static.Row.init(text: "Blah")],
+				footer: "This will affect all temperature readings listed in this app from the National Weather Service or your Centigrade station."
+			),
+		]
 	}
 	
 	override func updateViewConstraints() {
 		super.updateViewConstraints()
-		testLabel.centerInSuperview()
-		testLabel.constrainToSize(CGSize(width: 100, height: 100))
 	}
 }

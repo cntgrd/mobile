@@ -1,1 +1,2 @@
 github "venmo/Static"
+github "xmartlabs/Eureka" ~> 4.0

@@ -54,8 +54,8 @@ class MapViewController: UIViewController {
 		view = MapView(frame: UIScreen.main.bounds)
 	}
 	
-	override func viewDidAppear(_ animated: Bool) {
-		navigationController?.setNavigationBarHidden(true, animated: animated)
+	override func viewWillAppear(_ animated: Bool) {
+		navigationController?.setNavigationBarHidden(true, animated: false)
 	}
 	
 	override func viewDidLoad() {
@@ -71,8 +71,6 @@ class MapViewController: UIViewController {
 		mapView.cardView.dataSource = self
 		mapView.cardView.register(ConditionCardCell.self, forCellWithReuseIdentifier: "condition-cell")
 		mapView.appSettingsButton.addTarget(self, action: #selector(didPressAppSettingsButton), for: .touchUpInside)
-		
-		navigationController?.setNavigationBarHidden(true, animated: true)
 		
 		locationManager.requestWhenInUseAuthorization()
 	}
@@ -91,37 +89,6 @@ extension MapViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		return tileRenderer
 	}
-	
-	// [CITE] https://stackoverflow.com/a/32503189/3592716
-	// Make the current location dot centered between the top of screen
-	// and the top of the cards
-	/*
-	func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-		guard mapView.userTrackingMode == .follow || mapView.userTrackingMode == .followWithHeading else {
-			return
-		}
-		// Define a span (for zoom)
-		let span: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
-		
-		// Get user location
-		let location = CLLocationCoordinate2D(
-			latitude: userLocation.coordinate.latitude,
-			longitude: userLocation.coordinate.longitude
-		)
-		
-		// Get the close region for the user's location
-		// This zooms into the user's tracked location
-		let region = MKCoordinateRegion(center: location, span: span)
-		let adjusted = mapView.regionThatFits(region)
-		mapView.setRegion(adjusted, animated: true)
-		
-		var rect = mapView.visibleMapRect
-		let point = MKMapPointForCoordinate(location)
-		rect.origin.x = point.x - rect.size.width * 0.50
-		rect.origin.y = point.y - rect.size.height * 0.25
-		mapView.setVisibleMapRect(rect, animated: true)
-	}
-	*/
 }
 
 extension MapViewController: UICollectionViewDataSource {
