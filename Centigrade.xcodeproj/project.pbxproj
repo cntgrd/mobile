@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */; };
 		2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */; };
+		2718D8AC2045D9FB0005C1CD /* ConditionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */; };
 		271965F71FCE273700198BEE /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271965F61FCE273700198BEE /* LoadingState.swift */; };
 		272C56251FA924D800A799CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56241FA924D800A799CE /* AppDelegate.swift */; };
 		272C56271FA924D800A799CE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56261FA924D800A799CE /* MapViewController.swift */; };
@@ -21,17 +22,8 @@
 		275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5D1FE99AB20045F172 /* StateMachine.swift */; };
 		275B6A601FE9A2510045F172 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5F1FE9A2510045F172 /* HashablePair.swift */; };
 		275B6A621FE9AABF0045F172 /* StateMachineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A611FE9AABF0045F172 /* StateMachineTests.swift */; };
-		275B6A631FE9ABA10045F172 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5D1FE99AB20045F172 /* StateMachine.swift */; };
-		275B6A641FE9B6BE0045F172 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5F1FE9A2510045F172 /* HashablePair.swift */; };
 		276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */; };
-		276A4E78201AB93500A441E7 /* ConditionCardModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E77201AB93500A441E7 /* ConditionCardModel.swift */; };
-		276A4E7A201AB95000A441E7 /* ModellableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E79201AB95000A441E7 /* ModellableView.swift */; };
 		276A4E7C201ABB8700A441E7 /* RandomUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E7B201ABB8700A441E7 /* RandomUtilities.swift */; };
-		276A4E7E201AD03E00A441E7 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276A4E7D201AD03E00A441E7 /* CardView.swift */; };
-		27C80733201CF7F500A1D5C8 /* MainConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C80732201CF7F500A1D5C8 /* MainConditionView.swift */; };
-		27C80735201CFB5E00A1D5C8 /* ConditionCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C80734201CFB5E00A1D5C8 /* ConditionCardCell.swift */; };
-		27C80737201FE1AA00A1D5C8 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 27C80736201FE1AA00A1D5C8 /* Cartfile */; };
-		27D267D8201FE8E6007A2FCB /* Static.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27D267D7201FE8E6007A2FCB /* Static.framework */; };
 		27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */; };
 		27D267E02021292C007A2FCB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D267DF2021292C007A2FCB /* MapView.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +48,7 @@
 /* Begin PBXFileReference section */
 		2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+AttributionLabel.swift"; sourceTree = "<group>"; };
 		2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Edges.swift"; sourceTree = "<group>"; };
+		2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionCardView.swift; sourceTree = "<group>"; };
 		271965F61FCE273700198BEE /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		272C56211FA924D800A799CE /* Centigrade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centigrade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272C56241FA924D800A799CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,17 +66,13 @@
 		274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.dist.swift; sourceTree = "<group>"; };
 		274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		274B7FBA1FBDF67400CEC95E /* ImageTools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTools.swift; sourceTree = "<group>"; };
+		274E7717202D189A008CE249 /* Eureka.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Eureka.framework; path = Carthage/Build/iOS/Eureka.framework; sourceTree = "<group>"; };
 		275B6A5D1FE99AB20045F172 /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
 		275B6A5F1FE9A2510045F172 /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		275B6A611FE9AABF0045F172 /* StateMachineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineTests.swift; sourceTree = "<group>"; };
 		276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleUserTrackingButton.swift; sourceTree = "<group>"; };
-		276A4E77201AB93500A441E7 /* ConditionCardModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionCardModel.swift; sourceTree = "<group>"; };
-		276A4E79201AB95000A441E7 /* ModellableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModellableView.swift; sourceTree = "<group>"; };
 		276A4E7B201ABB8700A441E7 /* RandomUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomUtilities.swift; sourceTree = "<group>"; };
-		276A4E7D201AD03E00A441E7 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		276CD5AF1FA926A100D0E46F /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
-		27C80732201CF7F500A1D5C8 /* MainConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainConditionView.swift; sourceTree = "<group>"; };
-		27C80734201CFB5E00A1D5C8 /* ConditionCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionCardCell.swift; sourceTree = "<group>"; };
 		27C80736201FE1AA00A1D5C8 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		27D267D7201FE8E6007A2FCB /* Static.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Static.framework; path = Carthage/Build/iOS/Static.framework; sourceTree = "<group>"; };
 		27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27D267D8201FE8E6007A2FCB /* Static.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,21 +104,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		271965F51FCE1E8000198BEE /* Layout and Utilities */ = {
+		2718D8AA2044D0100005C1CD /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				275B6A5D1FE99AB20045F172 /* StateMachine.swift */,
+				274B7FBA1FBDF67400CEC95E /* ImageTools.swift */,
 				275B6A5F1FE9A2510045F172 /* HashablePair.swift */,
 				271965F61FCE273700198BEE /* LoadingState.swift */,
+				276A4E7B201ABB8700A441E7 /* RandomUtilities.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		271965F51FCE1E8000198BEE /* Layout */ = {
+			isa = PBXGroup;
+			children = (
 				2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */,
 				274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */,
-				274B7FBA1FBDF67400CEC95E /* ImageTools.swift */,
 				2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */,
-				276A4E79201AB95000A441E7 /* ModellableView.swift */,
-				276A4E7B201ABB8700A441E7 /* RandomUtilities.swift */,
-				276A4E7D201AD03E00A441E7 /* CardView.swift */,
 			);
-			path = "Layout and Utilities";
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		272C56181FA924D800A799CE = {
@@ -167,7 +160,8 @@
 				27D267D9201FE8F1007A2FCB /* App Settings View */,
 				275B6A5A1FE995CF0045F172 /* Map View */,
 				27C80731201CF7C800A1D5C8 /* Weather Condition Views */,
-				271965F51FCE1E8000198BEE /* Layout and Utilities */,
+				271965F51FCE1E8000198BEE /* Layout */,
+				2718D8AA2044D0100005C1CD /* Utilities */,
 				272C562B1FA924D800A799CE /* Assets.xcassets */,
 				272C56301FA924D800A799CE /* Info.plist */,
 			);
@@ -213,9 +207,7 @@
 		27C80731201CF7C800A1D5C8 /* Weather Condition Views */ = {
 			isa = PBXGroup;
 			children = (
-				276A4E77201AB93500A441E7 /* ConditionCardModel.swift */,
-				27C80732201CF7F500A1D5C8 /* MainConditionView.swift */,
-				27C80734201CFB5E00A1D5C8 /* ConditionCardCell.swift */,
+				2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */,
 			);
 			path = "Weather Condition Views";
 			sourceTree = "<group>";
@@ -223,6 +215,7 @@
 		27D267D6201FE8E6007A2FCB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				274E7717202D189A008CE249 /* Eureka.framework */,
 				27D267D7201FE8E6007A2FCB /* Static.framework */,
 			);
 			name = Frameworks;
@@ -344,7 +337,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27C80737201FE1AA00A1D5C8 /* Cartfile in Resources */,
 				272C562C1FA924D800A799CE /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +365,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Static.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Eureka.framework",
 			);
 			outputPaths = (
 			);
@@ -387,24 +380,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				276A4E7E201AD03E00A441E7 /* CardView.swift in Sources */,
 				2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */,
 				274B7FB51FBBA7E600CEC95E /* Secrets.swift in Sources */,
 				274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */,
 				276A4E7C201ABB8700A441E7 /* RandomUtilities.swift in Sources */,
 				275B6A601FE9A2510045F172 /* HashablePair.swift in Sources */,
+				2718D8AC2045D9FB0005C1CD /* ConditionCardView.swift in Sources */,
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
-				27C80733201CF7F500A1D5C8 /* MainConditionView.swift in Sources */,
 				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,
-				27C80735201CFB5E00A1D5C8 /* ConditionCardCell.swift in Sources */,
 				276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */,
-				276A4E78201AB93500A441E7 /* ConditionCardModel.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
 				27D267E02021292C007A2FCB /* MapView.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
-				276A4E7A201AB95000A441E7 /* ModellableView.swift in Sources */,
 				27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,8 +402,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				275B6A641FE9B6BE0045F172 /* HashablePair.swift in Sources */,
-				275B6A631FE9ABA10045F172 /* StateMachine.swift in Sources */,
 				272C563A1FA924D800A799CE /* CentigradeTests.swift in Sources */,
 				275B6A621FE9AABF0045F172 /* StateMachineTests.swift in Sources */,
 			);

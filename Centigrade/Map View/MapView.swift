@@ -11,11 +11,18 @@ import MapKit
 
 class MapView: UIView {
 	
+	// dimensional constants
+	let conditionCardSpacing: CGFloat = 18
+	let conditionCardHeight: CGFloat  = 221
+	
 	var map: MKMapView!
 	var buttonStack: UIStackView!
 	var locationButton: CircleUserTrackingButton!
 	var appSettingsButton: CircleButton!
-	var cardView: CardView!
+	var cardScrollView: UIScrollView!
+	var cardStack: UIStackView!
+	
+	var cards: [ConditionCardView] = []
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -50,12 +57,34 @@ class MapView: UIView {
 		}()
 		addSubview(buttonStack)
 		
-		cardView = {
-			let v = CardView(size: CGSize(width: 193, height: 217))
+		cardScrollView = {
+			let v = UIScrollView()
 			v.translatesAutoresizingMaskIntoConstraints = false
+			v.showsVerticalScrollIndicator = false
+			v.showsHorizontalScrollIndicator = false
+			v.bounces = true
+			v.alwaysBounceHorizontal = true
 			return v
 		}()
-		addSubview(cardView)
+		addSubview(cardScrollView)
+		
+		for _ in 1...5 {
+			let v = ConditionCardView()
+			v.translatesAutoresizingMaskIntoConstraints = false
+			cards.append(v)
+		}
+		
+		cardStack = {
+			let s = UIStackView(arrangedSubviews: cards)
+			s.translatesAutoresizingMaskIntoConstraints = false
+			s.backgroundColor = .red
+			s.axis = .horizontal
+			s.spacing = 15
+			s.alignment = .fill
+			s.distribution = .fill
+			return s
+		}()
+		cardScrollView.addSubview(cardStack)
 		
 		setNeedsUpdateConstraints()
 	}
@@ -69,10 +98,14 @@ class MapView: UIView {
 		
 		map.constrainEdgesToSuperview()
 		
-		buttonStack.constrainEdgesToSuperview([.trailing], inset: 15, usingMargins: false)
+		buttonStack.constrainEdgesToSuperview([.trailing], inset: conditionCardSpacing, usingMargins: false)
 		buttonStack.constrainEdgesToSuperview([.top], inset: 10, usingMargins: true)
 		
-		cardView.constrainEdgesToSuperview([.leading, .trailing], inset: 0, usingMargins: false)
-		cardView.constrainEdgesToSuperview([.bottom], inset: 15, usingMargins: true)
+		// Based on
+		// [CITE] https://developer.apple.com/library/content/technotes/tn2154/_index.html
+		cardScrollView.constrainEdgesToSuperview([.leading, .trailing, .bottom], inset: 0, usingMargins: false)
+		cardScrollView.constrainToHeight(conditionCardSpacing + conditionCardHeight)
+		cardStack.constrainEdgesToSuperview([.leading, .trailing, .bottom], inset: conditionCardSpacing)
+		cardStack.constrainEdgesToSuperview([.top], inset: 0)
 	}
 }

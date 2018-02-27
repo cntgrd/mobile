@@ -7,17 +7,9 @@
 //
 
 import UIKit
-import Static
+import Eureka
 
-class AppSettingsViewController: Static.TableViewController {
-	
-	init() {
-		super.init(style: .grouped)
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
+class AppSettingsViewController: FormViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		navigationController?.setNavigationBarHidden(false, animated: false)
@@ -26,16 +18,11 @@ class AppSettingsViewController: Static.TableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		dataSource.sections = [
-			Static.Section(
-				header: "Temperature",
-				rows: [Static.Row.init(text: "Blah")],
-				footer: "This will affect all temperature readings listed in this app from the National Weather Service or your Centigrade station."
-			),
-		]
-	}
-	
-	override func updateViewConstraints() {
-		super.updateViewConstraints()
+		form +++ Section(header: "Units", footer: "This will affect measurements in this app from the National Weather Service or your Centigrade station.")
+		<<< PushRow<String> { row in
+			row.title = "Temperature"
+			row.options = ["Fahrenheit","Celsius"]
+			row.value = "Fahrenheit"
+		}
 	}
 }

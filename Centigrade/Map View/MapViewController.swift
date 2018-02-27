@@ -68,8 +68,6 @@ class MapViewController: UIViewController {
 		mapView.map.delegate = self
 		mapView.map.add(weatherOverlay, level: .aboveRoads)
 		
-		mapView.cardView.dataSource = self
-		mapView.cardView.register(ConditionCardCell.self, forCellWithReuseIdentifier: "condition-cell")
 		mapView.appSettingsButton.addTarget(self, action: #selector(didPressAppSettingsButton), for: .touchUpInside)
 		
 		locationManager.requestWhenInUseAuthorization()
@@ -88,16 +86,6 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		return tileRenderer
-	}
-}
-
-extension MapViewController: UICollectionViewDataSource {
-	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return 5
-	}
-	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "condition-cell", for: indexPath)
-		return cell
 	}
 }
 
