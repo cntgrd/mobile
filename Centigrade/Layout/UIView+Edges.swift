@@ -37,54 +37,64 @@ extension UILayoutGuide: HasAnchors {}
 
 extension UIView {
 	
-	func centerIn(_ container: UIView) {
-		self.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
-		self.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+	@discardableResult func centerIn(_ container: UIView) -> [NSLayoutConstraint] {
+		let constraints = [
+			self.centerXAnchor.constraint(equalTo: container.centerXAnchor),
+			self.centerYAnchor.constraint(equalTo: container.centerYAnchor)
+		]
+		_ = constraints.map { $0.isActive = true }
+		return constraints
 	}
 	
-	func centerInSuperview() {
-		centerIn(self.superview!)
+	@discardableResult func centerInSuperview() -> [NSLayoutConstraint] {
+		return centerIn(self.superview!)
 	}
 	
-	private func _constrainEdges(
+	@discardableResult private func _constrainEdges(
 		edgesAndInsets: [Edge: CGFloat],
 		target: HasAnchors
-	) {
+	) -> [NSLayoutConstraint] {
+		
+		var constraints = [NSLayoutConstraint]()
+		
 		if let topInset = edgesAndInsets[.top] {
-			self.topAnchor.constraint(
+			constraints.append(self.topAnchor.constraint(
 				equalTo: target.topAnchor,
 				constant: topInset
-			).isActive = true
+			))
 		}
 		
 		if let bottomInset = edgesAndInsets[.bottom] {
-			self.bottomAnchor.constraint(
+			constraints.append(self.bottomAnchor.constraint(
 				equalTo: target.bottomAnchor,
 				constant: -1.0*bottomInset
-			).isActive = true
+			))
 		}
 		
 		if let leadingInset = edgesAndInsets[.leading] {
-			self.leadingAnchor.constraint(
+			constraints.append(self.leadingAnchor.constraint(
 				equalTo: target.leadingAnchor,
 				constant: leadingInset
-			).isActive = true
+			))
 		}
 		
 		if let trailingInset = edgesAndInsets[.trailing] {
-			self.trailingAnchor.constraint(
+			constraints.append(self.trailingAnchor.constraint(
 				equalTo: target.trailingAnchor,
 				constant: -1.0*trailingInset
-			).isActive = true
+			))
 		}
+		
+		_ = constraints.map { $0.isActive = true }
+		return constraints
 	}
 	
-	func constrainEdges(
+	@discardableResult func constrainEdges(
 		_ edges: [Edge] = [.top, .bottom, .leading, .trailing],
 		to other: UIView,
 		insets: [CGFloat]? = nil,
 		usingMargins: Bool = false
-	) {
+	) -> [NSLayoutConstraint] {
 		// We either target the view itself, or its margins guide,
 		// depending on the usingMargins boolean.
 		let target: HasAnchors = usingMargins ? other.layoutMarginsGuide : other
@@ -105,7 +115,7 @@ extension UIView {
 		if let insets = insets {
 			guard insets.count == edges.count else {
 				print("Warning: size mismatch between number of edges and number of insets in call to constrainEdges(_:to:insets:usingMargins:). Constraints not made.")
-				return
+				return []
 			}
 			for (edge, inset) in zip(edges, insets) {
 				edgesAndInsets[edge] = inset
@@ -114,48 +124,54 @@ extension UIView {
 		
 		// Call the underlying function that actually constrains
 		// the edges.
-		_constrainEdges(edgesAndInsets: edgesAndInsets, target: target)
+		return _constrainEdges(edgesAndInsets: edgesAndInsets, target: target)
 	}
 	
-	func constrainEdges(
+	@discardableResult func constrainEdges(
 		_ edges: [Edge] = [.top, .bottom, .leading, .trailing],
 		to other: UIView,
 		inset: CGFloat = 0.0,
 		usingMargins: Bool = false
-	) {
+	) -> [NSLayoutConstraint] {
 		// This function allows a single inset value to be provided
 		// instead of an array.
 		let insets = Array(repeating: inset, count: edges.count)
-		constrainEdges(edges, to: other, insets: insets, usingMargins: usingMargins)
+		return constrainEdges(edges, to: other, insets: insets, usingMargins: usingMargins)
 	}
 	
-	func constrainEdgesToSuperview(
+	@discardableResult func constrainEdgesToSuperview(
 		_ edges: [Edge] = [.top, .bottom, .leading, .trailing],
 		inset: CGFloat = 0.0,
 		usingMargins: Bool = false
-	) {
+	) -> [NSLayoutConstraint] {
 		// This function presupposes that you're constraining to a superview
 		// that actually exists.
-		constrainEdges(edges, to: superview!, inset: inset, usingMargins: usingMargins)
+		return constrainEdges(edges, to: superview!, inset: inset, usingMargins: usingMargins)
 	}
 	
-	func constrainToSize(_ size: CGSize) {
-		self.widthAnchor.constraint(equalToConstant: size.width).isActive = true
-		self.constrainToHeight(size.height)
+	@discardableResult func constrainToSize(_ size: CGSize) -> [NSLayoutConstraint] {
+		return self.constrainToWidth(size.width) + self.constrainToHeight(size.height)
 	}
 	
-	func constrainToAspectRatio(_ ratio: CGFloat) {
-		self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: ratio).isActive = true
+	@discardableResult func constrainToAspectRatio(_ ratio: CGFloat) -> [NSLayoutConstraint] {
+		let constraint = self.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: ratio)
+		constraint.isActive = true
+		return [constraint]
 	}
 	
-	func constrainToWidth(_ width: CGFloat) {
-		self.widthAnchor.constraint(equalToConstant: width).isActive = true
+	@discardableResult func constrainToWidth(_ width: CGFloat) -> [NSLayoutConstraint] {
+		let constraint = self.widthAnchor.constraint(equalToConstant: width)
+		constraint.isActive = true
+		return [constraint]
 	}
 	
-	func constrainToHeight(_ height: CGFloat) {
-		self.heightAnchor.constraint(equalToConstant: height).isActive = true
+	@discardableResult func constrainToHeight(_ height: CGFloat) -> [NSLayoutConstraint] {
+		let constraint = self.heightAnchor.constraint(equalToConstant: height)
+		constraint.isActive = true
+		return [constraint]
 	}
 	
+	// Unactivated constraint factories
 	func makeConstraintBelow(view other: UIView, offset: CGFloat = 0.0) -> NSLayoutConstraint {
 		return self.topAnchor.constraint(equalTo: other.bottomAnchor, constant: offset)
 	}

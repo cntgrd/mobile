@@ -81,6 +81,10 @@ class MapViewController: UIViewController {
 	@objc func didPressAppSettingsButton() {
 		navigationController?.pushViewController(AppSettingsViewController(), animated: true)
 	}
+	
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		updateViewConstraints()
+	}
 }
 
 extension MapViewController: MKMapViewDelegate {

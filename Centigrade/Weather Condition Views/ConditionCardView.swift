@@ -43,8 +43,8 @@ class ConditionCardView: UIView {
 	
 	override func updateConstraints() {
 		super.updateConstraints()
-		constrainToAspectRatio(0.889)
-		constrainToHeight(UIScreen.main.bounds.height * 221 / 670)
+		constrainToHeight(221)
+		constrainToWidth(196)
 		
 		titleLabel.constrainEdgesToSuperview([.top, .leading, .trailing], inset: 20)
 	}
