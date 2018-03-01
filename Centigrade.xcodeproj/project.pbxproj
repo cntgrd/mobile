@@ -10,6 +10,8 @@
 		2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */; };
 		2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */; };
 		2718D8AC2045D9FB0005C1CD /* ConditionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */; };
+		2718D8AE20460BCC0005C1CD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AD20460BCC0005C1CD /* Colors.swift */; };
+		2718D8B0204610480005C1CD /* Modellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AF204610480005C1CD /* Modellable.swift */; };
 		271965F71FCE273700198BEE /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271965F61FCE273700198BEE /* LoadingState.swift */; };
 		272C56251FA924D800A799CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56241FA924D800A799CE /* AppDelegate.swift */; };
 		272C56271FA924D800A799CE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56261FA924D800A799CE /* MapViewController.swift */; };
@@ -49,6 +51,8 @@
 		2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+AttributionLabel.swift"; sourceTree = "<group>"; };
 		2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Edges.swift"; sourceTree = "<group>"; };
 		2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionCardView.swift; sourceTree = "<group>"; };
+		2718D8AD20460BCC0005C1CD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2718D8AF204610480005C1CD /* Modellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modellable.swift; sourceTree = "<group>"; };
 		271965F61FCE273700198BEE /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		272C56211FA924D800A799CE /* Centigrade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centigrade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272C56241FA924D800A799CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,7 +125,9 @@
 			children = (
 				2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */,
 				274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */,
+				276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */,
 				2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */,
+				2718D8AF204610480005C1CD /* Modellable.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -154,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				27B8BAA8202173EC00C4D558 /* Weather API */,
+				2718D8AD20460BCC0005C1CD /* Colors.swift */,
 				274B7FB41FBBA7E600CEC95E /* Secrets.swift */,
 				274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */,
 				272C56241FA924D800A799CE /* AppDelegate.swift */,
@@ -191,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				272C56261FA924D800A799CE /* MapViewController.swift */,
-				276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */,
 				27D267DF2021292C007A2FCB /* MapView.swift */,
 			);
 			path = "Map View";
@@ -389,9 +395,11 @@
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
+				2718D8AE20460BCC0005C1CD /* Colors.swift in Sources */,
 				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,
 				276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
+				2718D8B0204610480005C1CD /* Modellable.swift in Sources */,
 				27D267E02021292C007A2FCB /* MapView.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
 				27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */,

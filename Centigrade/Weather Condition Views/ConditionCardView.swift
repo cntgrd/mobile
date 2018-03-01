@@ -8,6 +8,26 @@
 
 import UIKit
 
+enum WeatherTemperatureUnit {
+	case c, f
+}
+
+enum WeatherCondition {
+	case sunny, cloudy
+}
+
+struct ConditionCardViewModel {
+	var title: String
+	var condition: WeatherCondition
+	var temperature: Int
+	var temperatureUnit: WeatherTemperatureUnit
+	var highTemperature: Int
+	var lowTemperature: Int
+	var percentRain: Int
+	var percentHumidity: Int
+	var atmosphericPressure: Double
+}
+
 class ConditionCardView: UIView {
 	
 	var titleLabel: UILabel!
@@ -47,5 +67,23 @@ class ConditionCardView: UIView {
 		constrainToWidth(196)
 		
 		titleLabel.constrainEdgesToSuperview([.top, .leading, .trailing], inset: 20)
+	}
+}
+
+extension ConditionCardView: Modellable {
+	typealias ViewModel = ConditionCardViewModel
+	
+	func load(viewModel: ConditionCardViewModel) {
+//		var title: String
+		titleLabel.text = viewModel.title
+		
+//		var condition: WeatherCondition
+//		var temperature: Int
+//		var temperatureUnit: WeatherTemperatureUnit
+//		var highTemperature: Int
+//		var lowTemperature: Int
+//		var percentRain: Int
+//		var percentHumidity: Int
+//		var atmosphericPressure: Double
 	}
 }

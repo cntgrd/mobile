@@ -46,7 +46,7 @@ class CircleButton: UIControl, LoadingState {
 		didSet { didSetIcon() }
 	}
 	
-	static let defaultBackgroundColor: UIColor = UIColor(white: 0.9, alpha: 1)
+	static let defaultBackgroundColor: UIColor = Colors.circleButtonDefaultBackground
 	override var backgroundColor: UIColor? {
 		set {
 			iconView.backgroundColor = newValue

@@ -11,7 +11,7 @@ import MapKit
 
 class CircleUserTrackingButton: CircleButton {
 	
-	let defaultBlue: UIColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
+	let defaultBlue: UIColor = Colors.circleUserTrackingButtonBackground
 	
 	private typealias ButtonStateMachine = EventStateMachine<TrackingButtonStates, TrackingButtonEvents>
 	
