@@ -11,11 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController {
 	
-	lazy var conditionViewModels: [WeatherConditionViewModel] = {
+	lazy var conditionViewModels: [ViewModel] = {
 		return [
-			WeatherConditionViewModel(title: "Howdy"),
-			WeatherConditionViewModel(title: "Pardner"),
-			WeatherConditionViewModel(title: "Sheriff Woody")
+			WeatherConditionViewModel(title: "Today", condition: .sunny),
+			WeatherConditionViewModel(title: "Tomorrow", condition: .cloudy),
+			WeatherConditionViewModel(title: "Later", condition: .sunny)
 		]
 	}()
 	
@@ -104,6 +104,7 @@ extension MapViewController: MKMapViewDelegate {
 }
 
 extension MapViewController: CardScrollViewDataSource {
+	
 	func numberOfCards(in cardScrollView: CardScrollView) -> Int {
 		return conditionViewModels.count
 	}
