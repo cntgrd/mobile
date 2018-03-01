@@ -1,5 +1,5 @@
 //
-//  Modellable.swift
+//  ViewModel.swift
 //  Centigrade
 //
 //  Created by Paul Herz on 2018-02-27.
@@ -8,7 +8,6 @@
 
 import UIKit
 
-protocol Modellable: class {
-	associatedtype ViewModel
-	func load(viewModel: ViewModel)
+protocol ViewModel {
+	func makeView(from view: UIView?) -> UIView
 }

@@ -11,6 +11,14 @@ import MapKit
 
 class MapViewController: UIViewController {
 	
+	lazy var conditionViewModels: [WeatherConditionViewModel] = {
+		return [
+			WeatherConditionViewModel(title: "Howdy"),
+			WeatherConditionViewModel(title: "Pardner"),
+			WeatherConditionViewModel(title: "Sheriff Woody")
+		]
+	}()
+	
 	lazy var locationManager: CLLocationManager = CLLocationManager()
 	
 	lazy var weatherOverlay: MKTileOverlay = {
@@ -70,6 +78,8 @@ class MapViewController: UIViewController {
 		
 		mapView.appSettingsButton.addTarget(self, action: #selector(didPressAppSettingsButton), for: .touchUpInside)
 		
+		mapView.cardScrollView.dataSource = self
+		
 		locationManager.requestWhenInUseAuthorization()
 	}
 	
@@ -90,6 +100,17 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
 	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
 		return tileRenderer
+	}
+}
+
+extension MapViewController: CardScrollViewDataSource {
+	func numberOfCards(in cardScrollView: CardScrollView) -> Int {
+		return conditionViewModels.count
+	}
+	
+	func contentView(in cardScrollView: CardScrollView, atIndex index: Int) -> UIView {
+		let model = conditionViewModels[index]
+		return model.makeView(from: nil)
 	}
 }
 

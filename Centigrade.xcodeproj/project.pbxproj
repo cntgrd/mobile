@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */; };
 		2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */; };
-		2718D8AC2045D9FB0005C1CD /* ConditionCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */; };
 		2718D8AE20460BCC0005C1CD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AD20460BCC0005C1CD /* Colors.swift */; };
-		2718D8B0204610480005C1CD /* Modellable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AF204610480005C1CD /* Modellable.swift */; };
+		2718D8B0204610480005C1CD /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AF204610480005C1CD /* ViewModel.swift */; };
+		2718D8B320487B6E0005C1CD /* CardScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8B220487B6E0005C1CD /* CardScrollView.swift */; };
+		2718D8B720488EED0005C1CD /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8B620488EED0005C1CD /* CardView.swift */; };
+		2718D8B92048903E0005C1CD /* WeatherConditionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8B82048903E0005C1CD /* WeatherConditionView.swift */; };
 		271965F71FCE273700198BEE /* LoadingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271965F61FCE273700198BEE /* LoadingState.swift */; };
 		272C56251FA924D800A799CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56241FA924D800A799CE /* AppDelegate.swift */; };
 		272C56271FA924D800A799CE /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56261FA924D800A799CE /* MapViewController.swift */; };
@@ -50,9 +52,11 @@
 /* Begin PBXFileReference section */
 		2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+AttributionLabel.swift"; sourceTree = "<group>"; };
 		2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Edges.swift"; sourceTree = "<group>"; };
-		2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionCardView.swift; sourceTree = "<group>"; };
 		2718D8AD20460BCC0005C1CD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		2718D8AF204610480005C1CD /* Modellable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modellable.swift; sourceTree = "<group>"; };
+		2718D8AF204610480005C1CD /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		2718D8B220487B6E0005C1CD /* CardScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScrollView.swift; sourceTree = "<group>"; };
+		2718D8B620488EED0005C1CD /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		2718D8B82048903E0005C1CD /* WeatherConditionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherConditionView.swift; sourceTree = "<group>"; };
 		271965F61FCE273700198BEE /* LoadingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingState.swift; sourceTree = "<group>"; };
 		272C56211FA924D800A799CE /* Centigrade.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Centigrade.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272C56241FA924D800A799CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +124,15 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		2718D8B120487B590005C1CD /* Card Scroll View */ = {
+			isa = PBXGroup;
+			children = (
+				2718D8B620488EED0005C1CD /* CardView.swift */,
+				2718D8B220487B6E0005C1CD /* CardScrollView.swift */,
+			);
+			path = "Card Scroll View";
+			sourceTree = "<group>";
+		};
 		271965F51FCE1E8000198BEE /* Layout */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,7 +140,7 @@
 				274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */,
 				276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */,
 				2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */,
-				2718D8AF204610480005C1CD /* Modellable.swift */,
+				2718D8AF204610480005C1CD /* ViewModel.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -166,6 +179,7 @@
 				272C56241FA924D800A799CE /* AppDelegate.swift */,
 				27D267D9201FE8F1007A2FCB /* App Settings View */,
 				275B6A5A1FE995CF0045F172 /* Map View */,
+				2718D8B120487B590005C1CD /* Card Scroll View */,
 				27C80731201CF7C800A1D5C8 /* Weather Condition Views */,
 				271965F51FCE1E8000198BEE /* Layout */,
 				2718D8AA2044D0100005C1CD /* Utilities */,
@@ -213,7 +227,7 @@
 		27C80731201CF7C800A1D5C8 /* Weather Condition Views */ = {
 			isa = PBXGroup;
 			children = (
-				2718D8AB2045D9FB0005C1CD /* ConditionCardView.swift */,
+				2718D8B82048903E0005C1CD /* WeatherConditionView.swift */,
 			);
 			path = "Weather Condition Views";
 			sourceTree = "<group>";
@@ -389,17 +403,19 @@
 				2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */,
 				274B7FB51FBBA7E600CEC95E /* Secrets.swift in Sources */,
 				274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */,
+				2718D8B320487B6E0005C1CD /* CardScrollView.swift in Sources */,
 				276A4E7C201ABB8700A441E7 /* RandomUtilities.swift in Sources */,
 				275B6A601FE9A2510045F172 /* HashablePair.swift in Sources */,
-				2718D8AC2045D9FB0005C1CD /* ConditionCardView.swift in Sources */,
+				2718D8B720488EED0005C1CD /* CardView.swift in Sources */,
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
+				2718D8B92048903E0005C1CD /* WeatherConditionView.swift in Sources */,
 				2718D8AE20460BCC0005C1CD /* Colors.swift in Sources */,
 				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,
 				276A4E762018E73B00A441E7 /* CircleUserTrackingButton.swift in Sources */,
 				272C56271FA924D800A799CE /* MapViewController.swift in Sources */,
-				2718D8B0204610480005C1CD /* Modellable.swift in Sources */,
+				2718D8B0204610480005C1CD /* ViewModel.swift in Sources */,
 				27D267E02021292C007A2FCB /* MapView.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
 				27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */,

@@ -20,10 +20,7 @@ class MapView: UIView {
 	var buttonStack: UIStackView!
 	var locationButton: CircleUserTrackingButton!
 	var appSettingsButton: CircleButton!
-	var cardScrollView: UIScrollView!
-	var cardStack: UIStackView!
-	
-	var cards: [ConditionCardView] = []
+	var cardScrollView: CardScrollView!
 	
 	var traitConstraints: [NSLayoutConstraint] = []
 	
@@ -61,33 +58,10 @@ class MapView: UIView {
 		addSubview(buttonStack)
 		
 		cardScrollView = {
-			let v = UIScrollView()
-			v.translatesAutoresizingMaskIntoConstraints = false
-			v.layer.masksToBounds = false
-			v.showsVerticalScrollIndicator = false
-			v.showsHorizontalScrollIndicator = false
-			v.bounces = true
-			return v
+			let c = CardScrollView()
+			return c
 		}()
 		addSubview(cardScrollView)
-		
-		for _ in 1...5 {
-			let v = ConditionCardView()
-			v.translatesAutoresizingMaskIntoConstraints = false
-			cards.append(v)
-		}
-		
-		cardStack = {
-			let s = UIStackView(arrangedSubviews: cards)
-			s.translatesAutoresizingMaskIntoConstraints = false
-			s.layer.masksToBounds = false
-			s.axis = .horizontal
-			s.spacing = 15
-			s.alignment = .fill
-			s.distribution = .fill
-			return s
-		}()
-		cardScrollView.addSubview(cardStack)
 		
 		setupConstraints()
 		setNeedsUpdateConstraints()
@@ -108,17 +82,10 @@ class MapView: UIView {
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 		super.traitCollectionDidChange(previousTraitCollection)
 		setNeedsUpdateConstraints()
-		
 		if traitCollection.verticalSizeClass == .regular {
-			// horizontal stack
-			cardStack.axis = .horizontal
-			cardScrollView.alwaysBounceHorizontal = true
-			cardScrollView.alwaysBounceVertical = false
+			cardScrollView.direction = .horizontal
 		} else {
-			// vertical stack
-			cardStack.axis = .vertical
-			cardScrollView.alwaysBounceHorizontal = false
-			cardScrollView.alwaysBounceVertical = true
+			cardScrollView.direction = .vertical
 		}
 	}
 	
@@ -134,17 +101,11 @@ class MapView: UIView {
 		if traitCollection.verticalSizeClass == .regular {
 			// horizontal cards at bottom when portrait
 			traitConstraints =
-				cardScrollView.constrainEdgesToSuperview([.leading, .bottom, .trailing], inset: 0, usingMargins: false) +
-				cardScrollView.constrainToHeight(conditionCardSpacing + conditionCardHeight) +
-				cardStack.constrainEdgesToSuperview([.leading, .bottom, .trailing], inset: conditionCardSpacing) +
-				cardStack.constrainEdgesToSuperview([.top], inset: 0)
+				cardScrollView.constrainEdgesToSuperview([.leading, .bottom, .trailing], inset: 0, usingMargins: false)
 		} else {
 			// vertical cards at left when landscape
 			traitConstraints =
-				cardScrollView.constrainEdgesToSuperview([.top, .leading, .bottom], inset: 0, usingMargins: false) +
-				cardScrollView.constrainToWidth(conditionCardSpacing + conditionCardWidth) +
-				cardStack.constrainEdgesToSuperview([.top, .leading, .bottom], inset: conditionCardSpacing) +
-				cardStack.constrainEdgesToSuperview([.trailing], inset: 0)
+				cardScrollView.constrainEdgesToSuperview([.top, .leading, .bottom], inset: 0, usingMargins: false)
 		}
 	}
 }
