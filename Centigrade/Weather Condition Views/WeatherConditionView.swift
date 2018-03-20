@@ -33,12 +33,17 @@ struct WeatherConditionViewModel: ViewModel {
 
 class WeatherConditionView: UIView {
 	
+	let measurementLabelSize = 1.1 * UIFont.systemFontSize
+	
 	var titleLabel: UILabel!
 	var conditionIconView: UIImageView!
 	
 	var temperatureAndConditionStack: UIStackView!
 	var temperatureLabel: UILabel!
 	var conditionLabel: UILabel!
+	
+	var highLowTemperatureLabel: UILabel!
+	var precipitationLabel: UILabel!
 	
 	var humidityMeasurementLabel: UILabel!
 	var humidityWordLabel: UILabel!
@@ -95,6 +100,15 @@ class WeatherConditionView: UIView {
 		}()
 		addSubview(temperatureAndConditionStack)
 		
+		// Create temporary constants and reassign them to existing vars
+		// (for some reason tuple pattern matching falls apart when the lvalues
+		// are optional and the return type is not...)
+		let (hilo, precip) = makeMeasurementLabelPair("", "")
+		highLowTemperatureLabel = hilo
+		precipitationLabel = precip
+		addSubview(highLowTemperatureLabel)
+		addSubview(precipitationLabel)
+		
 		let (hA, hB) = makeMeasurementLabelPair("49%", "HUMIDITY")
 		humidityMeasurementLabel = hA
 		humidityWordLabel = hB
@@ -108,6 +122,9 @@ class WeatherConditionView: UIView {
 		addSubview(pressureWordLabel)
 		
 		setupConstraints()
+		
+		setTemperatures(high: 82, low: 51)
+		setPrecipitation(percent: 20)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -142,27 +159,56 @@ class WeatherConditionView: UIView {
 			v!.makeConstraintAbove(view: pressureMeasurementLabel, offset: 8).isActive = true
 		}
 		
+		highLowTemperatureLabel.constrainEdgesToSuperview([.leading], inset: inset)
+		precipitationLabel.makeConstraintTrailing(view: highLowTemperatureLabel, offset: 0).isActive = true
+		precipitationLabel.constrainEdgesToSuperview([.trailing], inset: inset)
+		
+		for v in [highLowTemperatureLabel, precipitationLabel] {
+			v!.makeConstraintAbove(view: humidityMeasurementLabel, offset: 8).isActive = true
+		}
+	}
+	
+	func setTemperatures(high: Int, low: Int) {
+		let highLowString = NSMutableAttributedString()
+		let bold = UIFont.boldSystemFont(ofSize: measurementLabelSize)
+		highLowString.append(NSAttributedString(string: "↑", attributes: [.foregroundColor: UIColor.red, .font: bold]))
+		highLowString.append(NSAttributedString(string: " \(high)° "))
+		highLowString.append(NSAttributedString(string: "↓", attributes: [.foregroundColor: UIColor.blue, .font: bold]))
+		highLowString.append(NSAttributedString(string: " \(low)°"))
+		highLowTemperatureLabel.attributedText = highLowString
+	}
+	
+	func setPrecipitation(percent: Int) {
+		let attachment = NSTextAttachment()
+		attachment.image = UIImage(imageLiteralResourceName: "precip")
+		let attachmentString = NSAttributedString(attachment: attachment)
+		
+		let precipString = NSMutableAttributedString(attributedString: attachmentString)
+		precipString.append(NSAttributedString(string: " \(percent)%"))
+		
+		precipitationLabel.attributedText = precipString
+	}
+	
+	func makeMeasurementLabel() -> UILabel {
+		let l = UILabel()
+		l.translatesAutoresizingMaskIntoConstraints = false
+		l.numberOfLines = 1
+		l.font = UIFont.systemFont(ofSize: measurementLabelSize)
+		return l
 	}
 	
 	func makeMeasurementLabelPair(_ messageA: String, _ messageB: String) -> (UILabel, UILabel) {
-		let em = UIFont.systemFontSize
 		let a: UILabel = {
-			let l = UILabel()
+			let l = makeMeasurementLabel()
 			l.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-			l.translatesAutoresizingMaskIntoConstraints = false
-			l.numberOfLines = 1
 			l.text = messageA
-			l.font = UIFont.systemFont(ofSize: 1.1 * em)
 			return l
 		}()
 		
 		let b: UILabel = {
-			let l = UILabel()
+			let l = makeMeasurementLabel()
 			l.textAlignment = .right
-			l.translatesAutoresizingMaskIntoConstraints = false
-			l.numberOfLines = 1
 			l.text = messageB
-			l.font = UIFont.systemFont(ofSize: 1.1 * em)
 			return l
 		}()
 		
