@@ -14,8 +14,7 @@ class MapViewController: UIViewController {
 	lazy var conditionViewModels: [ViewModel] = {
 		return [
 			WeatherConditionViewModel(title: "Today", condition: .sunny),
-			WeatherConditionViewModel(title: "Tomorrow", condition: .cloudy),
-			WeatherConditionViewModel(title: "Later", condition: .sunny)
+			WeatherConditionViewModel(title: "Tomorrow", condition: .cloudy)
 		]
 	}()
 	

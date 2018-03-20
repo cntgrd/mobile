@@ -17,6 +17,7 @@ class MapView: UIView {
 	let conditionCardWidth: CGFloat   = 196
 	
 	var map: MKMapView!
+	var mapBlurBar: UIView!
 	var buttonStack: UIStackView!
 	var locationButton: CircleUserTrackingButton!
 	var appSettingsButton: CircleButton!
@@ -35,6 +36,22 @@ class MapView: UIView {
 			return m
 		}()
 		addSubview(map)
+		
+		mapBlurBar = {
+			if UIAccessibilityIsReduceTransparencyEnabled() {
+				let v = UIView()
+				v.translatesAutoresizingMaskIntoConstraints = false
+				v.backgroundColor = .white
+				return v
+			} else {
+				let effect = UIBlurEffect(style: .light)
+				let v = UIVisualEffectView(effect: effect)
+				v.translatesAutoresizingMaskIntoConstraints = false
+				return v
+			}
+		}()
+		
+		addSubview(mapBlurBar)
 		
 		locationButton = {
 			let c = CircleUserTrackingButton(mapView: self.map)
@@ -77,6 +94,8 @@ class MapView: UIView {
 		
 		buttonStack.constrainEdgesToSuperview([.trailing], inset: conditionCardSpacing, usingMargins: false)
 		buttonStack.constrainEdgesToSuperview([.top], inset: 10, usingMargins: true)
+		
+		mapBlurBar.constrainEdgesToSuperview([.leading, .top, .trailing], inset: 0, usingMargins: false)
 	}
 	
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -107,5 +126,7 @@ class MapView: UIView {
 			traitConstraints =
 				cardScrollView.constrainEdgesToSuperview([.top, .leading, .bottom], inset: 0, usingMargins: false)
 		}
+		
+		traitConstraints.append(contentsOf: mapBlurBar.constrainToHeight(UIApplication.shared.statusBarFrame.height))
 	}
 }
