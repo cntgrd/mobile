@@ -68,7 +68,7 @@ class CardScrollView: UIView {
 			s.translatesAutoresizingMaskIntoConstraints = false
 			s.layer.masksToBounds = false
 			s.axis = .horizontal
-			s.spacing = 15
+			s.spacing = spacing
 			s.alignment = .fill
 			s.distribution = .fill
 			return s

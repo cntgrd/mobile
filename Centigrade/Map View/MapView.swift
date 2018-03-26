@@ -119,12 +119,21 @@ class MapView: UIView {
 		// [CITE] https://developer.apple.com/library/content/technotes/tn2154/_index.html
 		if traitCollection.verticalSizeClass == .regular {
 			// horizontal cards at bottom when portrait
-			traitConstraints =
-				cardScrollView.constrainEdgesToSuperview([.leading, .bottom, .trailing], inset: 0, usingMargins: false)
+			traitConstraints = cardScrollView.constrainEdgesToSuperview([.leading, .trailing], inset: 0, usingMargins: false)
+			
+			let safeBottomConstraint = cardScrollView.bottomAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor)
+			safeBottomConstraint.isActive = true
+			
+			traitConstraints.append(safeBottomConstraint)
 		} else {
 			// vertical cards at left when landscape
 			traitConstraints =
-				cardScrollView.constrainEdgesToSuperview([.top, .leading, .bottom], inset: 0, usingMargins: false)
+				cardScrollView.constrainEdgesToSuperview([.top, .bottom], inset: 0, usingMargins: false)
+			
+			let safeLeadingConstraint = cardScrollView.leadingAnchor.constraint(greaterThanOrEqualTo: safeAreaLayoutGuide.leadingAnchor)
+			safeLeadingConstraint.isActive = true
+			
+			traitConstraints.append(safeLeadingConstraint)
 		}
 		
 		traitConstraints.append(contentsOf: mapBlurBar.constrainToHeight(UIApplication.shared.statusBarFrame.height))
