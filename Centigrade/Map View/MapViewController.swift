@@ -18,7 +18,7 @@ class MapViewController: UIViewController {
 		]
 	}()
 	
-	lazy var locationManager: CLLocationManager = CLLocationManager()
+	lazy var locationManager: CLLocationManager = API.locationManager
 	
 	lazy var weatherOverlay: MKTileOverlay = {
 		// [CITE] http://mesonet.agron.iastate.edu/ogc/
@@ -80,6 +80,12 @@ class MapViewController: UIViewController {
 		mapView.cardScrollView.dataSource = self
 		
 		locationManager.requestWhenInUseAuthorization()
+		
+		API.getForecastAtCurrentLocation().done { forecast in
+			print(forecast.periods.map { $0.name })
+		}.catch { error in
+			print("ERROR 89: \(error.localizedDescription)")
+		}
 	}
 	
 	override func didReceiveMemoryWarning() {

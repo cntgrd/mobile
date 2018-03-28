@@ -20,6 +20,8 @@
 		272C562C1FA924D800A799CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272C562B1FA924D800A799CE /* Assets.xcassets */; };
 		272C563A1FA924D800A799CE /* CentigradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56391FA924D800A799CE /* CentigradeTests.swift */; };
 		272C56451FA924D900A799CE /* CentigradeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272C56441FA924D900A799CE /* CentigradeUITests.swift */; };
+		273E9A38206ADBA4008E3FE2 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E9A37206ADBA4008E3FE2 /* API.swift */; };
+		273E9A3A206AE89F008E3FE2 /* TextToSpeech.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273E9A39206AE89F008E3FE2 /* TextToSpeech.swift */; };
 		274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */; };
 		274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 274B7FBA1FBDF67400CEC95E /* ImageTools.swift */; };
 		275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275B6A5D1FE99AB20045F172 /* StateMachine.swift */; };
@@ -69,6 +71,8 @@
 		272C56401FA924D900A799CE /* CentigradeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CentigradeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		272C56441FA924D900A799CE /* CentigradeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentigradeUITests.swift; sourceTree = "<group>"; };
 		272C56461FA924D900A799CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		273E9A37206ADBA4008E3FE2 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		273E9A39206AE89F008E3FE2 /* TextToSpeech.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextToSpeech.swift; sourceTree = "<group>"; };
 		274B7FB21FBBA71E00CEC95E /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		274B7FB61FBBA81600CEC95E /* Secrets.dist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.dist.swift; sourceTree = "<group>"; };
 		274B7FB81FBDEE8B00CEC95E /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 				275B6A5F1FE9A2510045F172 /* HashablePair.swift */,
 				271965F61FCE273700198BEE /* LoadingState.swift */,
 				276A4E7B201ABB8700A441E7 /* RandomUtilities.swift */,
+				273E9A39206AE89F008E3FE2 /* TextToSpeech.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 		27B8BAA8202173EC00C4D558 /* Weather API */ = {
 			isa = PBXGroup;
 			children = (
+				273E9A37206ADBA4008E3FE2 /* API.swift */,
 			);
 			path = "Weather API";
 			sourceTree = "<group>";
@@ -384,10 +390,16 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Static.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Eureka.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PMKCoreLocation.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
 			);
 			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Eureka.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PMKFoundation.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PMKCoreLocation.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PromiseKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -403,9 +415,11 @@
 				2E31A9892061B6CD000EA39D /* Secrets.swift in Sources */,
 				2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */,
 				274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */,
+				273E9A38206ADBA4008E3FE2 /* API.swift in Sources */,
 				2718D8B320487B6E0005C1CD /* CardScrollView.swift in Sources */,
 				276A4E7C201ABB8700A441E7 /* RandomUtilities.swift in Sources */,
 				275B6A601FE9A2510045F172 /* HashablePair.swift in Sources */,
+				273E9A3A206AE89F008E3FE2 /* TextToSpeech.swift in Sources */,
 				2718D8B720488EED0005C1CD /* CardView.swift in Sources */,
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
