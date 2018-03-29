@@ -11,8 +11,53 @@ import PromiseKit
 import PMKCoreLocation
 import PMKFoundation
 
+struct Temperature: CustomDebugStringConvertible {
+	var debugDescription: String {
+		switch unit {
+		case .fahrenheit:
+			return "Temperature(\(value)°F)"
+		case .celsius:
+			return "Temperature(\(value)°C)"
+		}
+	}
+	
+	enum Unit { case fahrenheit, celsius }
+	
+	private var value: Int
+	private var unit: Unit
+	init(degreesFahrenheit: Int) {
+		value = degreesFahrenheit
+		unit = .fahrenheit
+	}
+	init(degreesCelsius: Int) {
+		value = degreesCelsius
+		unit = .celsius
+	}
+	
+	var inCelsius: Int {
+		switch unit {
+		case .celsius:
+			return value
+		case .fahrenheit:
+			// C = 5/9 (F-32)
+			
+			return Int((5.0/9.0) * Double(value - 32))
+		}
+	}
+	
+	var inFahrenheit: Int {
+		switch unit {
+		case .celsius:
+			// F = 1.8 C + 32
+			return Int((1.8 * Double(value)) + 32)
+		case .fahrenheit:
+			return value
+		}
+	}
+}
+
 enum APIError: Error {
-	case malformedURL, malformedDate
+	case malformedURL, malformedDate, unexpectedValue(String)
 }
 
 extension APIError: LocalizedError {
@@ -22,6 +67,8 @@ extension APIError: LocalizedError {
 			return "The given URL was malformed or nil."
 		case .malformedDate:
 			return "The date string from the server could not be converted into a native date format."
+		case let .unexpectedValue(message):
+			return "Unexpected value: \(message)"
 		}
 	}
 }
@@ -85,22 +132,37 @@ struct NWSForecast {
 		var number: Int
 		var name: String
 		var interval: DateInterval
+		var isDaytime: Bool
+		var temperature: Temperature
 	}
 	
 	var periods: [Period]
 	
 	fileprivate init(fromRawForecast rawForecast: RawNWSForecastResponse) throws {
-		periods = try rawForecast.properties.periods.map {
+		periods = try rawForecast.properties.periods.map { period in
 			guard
-				let start = decodeNWSDate($0.startTime),
-				let end = decodeNWSDate($0.endTime)
+				let start = decodeNWSDate(period.startTime),
+				let end = decodeNWSDate(period.endTime)
 			else {
 				throw APIError.malformedDate
 			}
+			
+			let temperature: Temperature = try {
+				if period.temperatureUnit == "F" {
+					return Temperature(degreesFahrenheit: period.temperature)
+				} else if period.temperatureUnit == "C" {
+					return Temperature(degreesCelsius: period.temperature)
+				} else {
+					throw APIError.unexpectedValue("Given temperatureUnit '\(period.temperatureUnit)'")
+				}
+			}()
+			
 			return Period(
-				number: $0.number,
-				name: $0.name,
-				interval: DateInterval(start: start, end: end)
+				number: period.number,
+				name: period.name,
+				interval: DateInterval(start: start, end: end),
+				isDaytime: period.isDaytime,
+				temperature: temperature
 			)
 		}.sorted(by: {
 			// areInIncreasingOrder

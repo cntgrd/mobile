@@ -9,25 +9,45 @@
 import UIKit
 
 enum WeatherCondition {
-	case sunny, cloudy
+	case unknown, sunny, cloudy
 }
 
 struct WeatherConditionViewModel: ViewModel {
 	var title: String
 	var condition: WeatherCondition
+	var temperature: Temperature
 	
 	func makeView(from view: UIView?) -> UIView {
 		let v = (view as? WeatherConditionView) ?? WeatherConditionView()
 		v.titleLabel.text = title
+		
+		// set condition styling
 		switch condition {
+		case .unknown:
+			v.backgroundColor = .white
+			v.conditionIconView.image = UIImage()
+			v.conditionLabel.text = "—"
 		case .sunny:
 			v.backgroundColor = Colors.weatherSunnyBackground
 			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-sunny-icon-64")
+			v.conditionLabel.text = "Sunny"
 		case .cloudy:
 			v.backgroundColor = Colors.weatherCloudyBackground
 			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-cloudy-icon-64")
+			v.conditionLabel.text = "Cloudy"
 		}
+		
+		// set temperature
+		// TODO user-defined unit preference
+		v.temperatureLabel.text = "\(temperature.inFahrenheit)°F"
+		
 		return v
+	}
+	
+	init(fromNWSPeriod period: NWSForecast.Period) {
+		title = period.name
+		temperature = period.temperature
+		condition = .unknown
 	}
 }
 
@@ -59,7 +79,7 @@ class WeatherConditionView: UIView {
 			let l = UILabel()
 			l.translatesAutoresizingMaskIntoConstraints = false
 			l.numberOfLines = 1
-			l.text = "Today"
+			l.text = "—"
 			return l
 		}()
 		addSubview(titleLabel)
@@ -76,7 +96,7 @@ class WeatherConditionView: UIView {
 			let l = UILabel()
 			l.numberOfLines = 1
 			l.translatesAutoresizingMaskIntoConstraints = false
-			l.text = "68°F"
+			l.text = "—°F"
 			let em = UIFont.systemFontSize
 			l.font = UIFont.systemFont(ofSize: 2.2 * em, weight: .medium)
 			return l
@@ -86,7 +106,7 @@ class WeatherConditionView: UIView {
 			let l = UILabel()
 			l.numberOfLines = 1
 			l.translatesAutoresizingMaskIntoConstraints = false
-			l.text = "Sunny"
+			l.text = "—"
 			return l
 		}()
 		
@@ -109,13 +129,13 @@ class WeatherConditionView: UIView {
 		addSubview(highLowTemperatureLabel)
 		addSubview(precipitationLabel)
 		
-		let (hA, hB) = makeMeasurementLabelPair("49%", "HUMIDITY")
+		let (hA, hB) = makeMeasurementLabelPair("—%", "HUMIDITY")
 		humidityMeasurementLabel = hA
 		humidityWordLabel = hB
 		addSubview(humidityMeasurementLabel)
 		addSubview(humidityWordLabel)
 		
-		let (pA, pB) = makeMeasurementLabelPair("30.1 inHG", "PRESSURE")
+		let (pA, pB) = makeMeasurementLabelPair("— inHG", "PRESSURE")
 		pressureMeasurementLabel = pA
 		pressureWordLabel = pB
 		addSubview(pressureMeasurementLabel)
@@ -123,8 +143,8 @@ class WeatherConditionView: UIView {
 		
 		setupConstraints()
 		
-		setTemperatures(high: 82, low: 51)
-		setPrecipitation(percent: 20)
+		setTemperatures(high: nil, low: nil)
+		setPrecipitation(percent: nil)
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -168,23 +188,32 @@ class WeatherConditionView: UIView {
 		}
 	}
 	
-	func setTemperatures(high: Int, low: Int) {
+	func setTemperatures(high: Int?, low: Int?) {
+		
+		let highString: String? = high.flatMap { String($0) }
+		let lowString: String? = low.flatMap { String($0) }
+		
 		let highLowString = NSMutableAttributedString()
 		let bold = UIFont.boldSystemFont(ofSize: measurementLabelSize)
 		highLowString.append(NSAttributedString(string: "↑", attributes: [.foregroundColor: UIColor.red, .font: bold]))
-		highLowString.append(NSAttributedString(string: " \(high)° "))
+		
+		highLowString.append(NSAttributedString(string: " \(highString ?? "—")° "))
+		
 		highLowString.append(NSAttributedString(string: "↓", attributes: [.foregroundColor: UIColor.blue, .font: bold]))
-		highLowString.append(NSAttributedString(string: " \(low)°"))
+		highLowString.append(NSAttributedString(string: " \(lowString ?? "—")°"))
+		
 		highLowTemperatureLabel.attributedText = highLowString
 	}
 	
-	func setPrecipitation(percent: Int) {
+	func setPrecipitation(percent: Int?) {
+		let percentString: String? = percent.flatMap { String($0) }
+		
 		let attachment = NSTextAttachment()
 		attachment.image = UIImage(imageLiteralResourceName: "precip")
 		let attachmentString = NSAttributedString(attachment: attachment)
 		
 		let precipString = NSMutableAttributedString(attributedString: attachmentString)
-		precipString.append(NSAttributedString(string: " \(percent)%"))
+		precipString.append(NSAttributedString(string: " \(percentString ?? "—")%"))
 		
 		precipitationLabel.attributedText = precipString
 	}

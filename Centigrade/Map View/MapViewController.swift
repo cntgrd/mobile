@@ -11,12 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController {
 	
-	lazy var conditionViewModels: [ViewModel] = {
-		return [
-			WeatherConditionViewModel(title: "Today", condition: .sunny),
-			WeatherConditionViewModel(title: "Tomorrow", condition: .cloudy)
-		]
-	}()
+	var conditionViewModels = [ViewModel]()
+//		return [
+//			WeatherConditionViewModel(title: "Today", condition: .sunny),
+//			WeatherConditionViewModel(title: "Tomorrow", condition: .cloudy)
+//		]
 	
 	lazy var locationManager: CLLocationManager = API.locationManager
 	
@@ -82,9 +81,12 @@ class MapViewController: UIViewController {
 		locationManager.requestWhenInUseAuthorization()
 		
 		API.getForecastAtCurrentLocation().done { forecast in
-			print(forecast.periods.map { $0.name })
+			self.conditionViewModels = forecast.periods.map {
+				WeatherConditionViewModel(fromNWSPeriod: $0)
+			}
+			self.mapView.cardScrollView.reloadData()
 		}.catch { error in
-			print("ERROR 89: \(error.localizedDescription)")
+			print("Error loading forecasts: \(error.localizedDescription)")
 		}
 	}
 	
