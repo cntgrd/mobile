@@ -11,6 +11,10 @@ import PromiseKit
 import PMKCoreLocation
 import PMKFoundation
 
+enum WeatherCondition {
+	case unknown, sunny, cloudy, clear
+}
+
 struct Temperature: CustomDebugStringConvertible {
 	var debugDescription: String {
 		switch unit {
@@ -134,6 +138,8 @@ struct NWSForecast {
 		var interval: DateInterval
 		var isDaytime: Bool
 		var temperature: Temperature
+		var condition: WeatherCondition
+		var conditionDescription: String
 	}
 	
 	var periods: [Period]
@@ -157,12 +163,18 @@ struct NWSForecast {
 				}
 			}()
 			
+			let (conditionDescription, condition) = API.parseCondition(
+				fromForecastMessage: period.detailedForecast
+			)
+			
 			return Period(
 				number: period.number,
 				name: period.name,
 				interval: DateInterval(start: start, end: end),
 				isDaytime: period.isDaytime,
-				temperature: temperature
+				temperature: temperature,
+				condition: condition,
+				conditionDescription: conditionDescription
 			)
 		}.sorted(by: {
 			// areInIncreasingOrder
@@ -203,5 +215,45 @@ class API {
 		return getCurrentLocation().then { location in
 			getForecast(atLocation: location)
 		}
+	}
+	
+	static func parseCondition(fromForecastMessage message: String) -> (String, WeatherCondition) {
+		var conditions = [String: WeatherCondition]()
+		let basicConditions: [String: WeatherCondition] = [
+			"sunny": .sunny,
+			"cloudy": .cloudy,
+			"clear": .clear
+		]
+		
+		// accept variants of conditions "mostly —" and "partly —"
+		for word in ["", "partly ", "mostly "] {
+			for (k,v) in basicConditions {
+				conditions["\(word)\(k)"] = v
+			}
+		}
+		
+		for k in conditions.keys {
+			print(k)
+		}
+		
+		// there may be a comma after the condition part, as below:
+		//     Mostly sunny, with a high near 71.
+		// or just a sentence:
+		//     Sunny. High near 82, ...
+		let sentences: [Substring] = message.split(separator: ".")
+		
+		// ["Mostly sunny", " with a high near 71"]
+		// potentialCondition = "mostly sunny" -- note the lowercase
+		if let description = sentences.first?.split(separator: ",").first?.lowercased(),
+		   let condition = conditions[description]
+		{
+			let titleDescription = description.capitalized
+			return (titleDescription, condition)
+		}
+		
+		print("API.parseCondition(fromForecastMessage:) could not interpret condition:\n")
+		print("\t\(message)\n")
+		
+		return ("Unknown", .unknown)
 	}
 }

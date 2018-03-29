@@ -8,33 +8,43 @@
 
 import UIKit
 
-enum WeatherCondition {
-	case unknown, sunny, cloudy
-}
-
 struct WeatherConditionViewModel: ViewModel {
 	var title: String
 	var condition: WeatherCondition
+	var conditionDescription: String
 	var temperature: Temperature
+	
+	init(fromNWSPeriod period: NWSForecast.Period) {
+		title = period.name
+		temperature = period.temperature
+		condition = period.condition
+		conditionDescription = period.conditionDescription
+	}
 	
 	func makeView(from view: UIView?) -> UIView {
 		let v = (view as? WeatherConditionView) ?? WeatherConditionView()
 		v.titleLabel.text = title
 		
 		// set condition styling
+		v.backgroundColor = .white
+		v.conditionIconView.image = UIImage()
+		v.conditionLabel.text = "—"
+		
+		if condition != .unknown {
+			v.conditionLabel.text = conditionDescription
+		}
+		
 		switch condition {
-		case .unknown:
-			v.backgroundColor = .white
-			v.conditionIconView.image = UIImage()
-			v.conditionLabel.text = "—"
 		case .sunny:
 			v.backgroundColor = Colors.weatherSunnyBackground
 			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-sunny-icon-64")
-			v.conditionLabel.text = "Sunny"
 		case .cloudy:
 			v.backgroundColor = Colors.weatherCloudyBackground
 			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-cloudy-icon-64")
-			v.conditionLabel.text = "Cloudy"
+		case .unknown:
+			break
+		case .clear:
+			break
 		}
 		
 		// set temperature
@@ -42,12 +52,6 @@ struct WeatherConditionViewModel: ViewModel {
 		v.temperatureLabel.text = "\(temperature.inFahrenheit)°F"
 		
 		return v
-	}
-	
-	init(fromNWSPeriod period: NWSForecast.Period) {
-		title = period.name
-		temperature = period.temperature
-		condition = .unknown
 	}
 }
 
@@ -107,6 +111,8 @@ class WeatherConditionView: UIView {
 			l.numberOfLines = 1
 			l.translatesAutoresizingMaskIntoConstraints = false
 			l.text = "—"
+			let em = UIFont.systemFontSize
+			l.font = UIFont.systemFont(ofSize: 0.9 * em)
 			return l
 		}()
 		
