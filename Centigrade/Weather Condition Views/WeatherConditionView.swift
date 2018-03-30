@@ -67,15 +67,23 @@ struct WeatherConditionViewModel: ViewModel {
 		}
 		
 		// set temperature
-		switch SettingsManager.shared.units.temperature.value {
-		case .fahrenheit:
-			print("F")
-			v.temperatureLabel.text = "\(temperature.inFahrenheit)°F"
-		case .celsius:
-			print("C")
-			v.temperatureLabel.text = "\(temperature.inCelsius)°C"
+		let updateTemperatureUnit = {
+			switch SettingsManager.shared.units.temperature.value {
+			case .fahrenheit:
+				v.temperatureLabel.text = "\(self.temperature.inFahrenheit)°F"
+			case .celsius:
+				v.temperatureLabel.text = "\(self.temperature.inCelsius)°C"
+			}
 		}
+		updateTemperatureUnit()
 		
+		NotificationCenter.default.addObserver(
+			forName: SettingsManager.shared.units.temperature.didChangeNotification,
+			object: nil,
+			queue: nil
+		) { notification in
+			updateTemperatureUnit()
+		}
 		
 		return v
 	}

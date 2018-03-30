@@ -14,6 +14,10 @@ class OptionSetting<T> {
 	
 	private let defaults = UserDefaults.standard
 	
+	var didChangeNotification: Notification.Name {
+		return Notification.Name("me.centigrade.OptionSettingDidChange.\(key)")
+	}
+	
 	let options: [T]
 	let defaultValue: T
 	let key: String
@@ -39,6 +43,7 @@ class OptionSetting<T> {
 				return
 			}
 			defaults.set(defaultsString, forKey: key)
+			NotificationCenter.default.post(name: didChangeNotification, object: nil, userInfo: nil)
 		}
 	}
 	
