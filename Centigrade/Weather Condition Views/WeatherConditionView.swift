@@ -13,12 +13,14 @@ struct WeatherConditionViewModel: ViewModel {
 	var condition: WeatherCondition
 	var conditionDescription: String
 	var temperature: Temperature
+	var isDaytime: Bool
 	
 	init(fromNWSPeriod period: NWSForecast.Period) {
 		title = period.name
 		temperature = period.temperature
 		condition = period.condition
 		conditionDescription = period.conditionDescription
+		isDaytime = period.isDaytime
 	}
 	
 	func makeView(from view: UIView?) -> UIView {
@@ -44,7 +46,24 @@ struct WeatherConditionViewModel: ViewModel {
 		case .unknown:
 			break
 		case .clear:
-			break
+			v.backgroundColor = Colors.weatherNightBackground
+			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-night-icon-64")
+		case .rain:
+			v.backgroundColor = Colors.weatherRainBackground
+			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-rain-icon-64")
+		case .snow:
+			v.backgroundColor = Colors.weatherSnowBackground
+			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-snow-icon-64")
+		case .thunderstorms:
+			v.backgroundColor = Colors.weatherThunderstormsBackground
+			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-tstorms-icon-64")
+		case .fog:
+			v.backgroundColor = Colors.weatherFogBackground
+			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-fog-icon-64")
+		}
+		
+		if !isDaytime {
+			v.backgroundColor = Colors.weatherNightBackground
 		}
 		
 		// set temperature
@@ -102,23 +121,25 @@ class WeatherConditionView: UIView {
 			l.translatesAutoresizingMaskIntoConstraints = false
 			l.text = "—°F"
 			let em = UIFont.systemFontSize
-			l.font = UIFont.systemFont(ofSize: 2.2 * em, weight: .medium)
+			l.font = UIFont.systemFont(ofSize: 2 * em, weight: .medium)
 			return l
 		}()
 		
 		conditionLabel = {
 			let l = UILabel()
-			l.numberOfLines = 1
+			l.numberOfLines = 2
+			l.lineBreakMode = .byWordWrapping
 			l.translatesAutoresizingMaskIntoConstraints = false
 			l.text = "—"
 			let em = UIFont.systemFontSize
-			l.font = UIFont.systemFont(ofSize: 0.9 * em)
+			l.font = UIFont.systemFont(ofSize: 1 * em)
 			return l
 		}()
 		
 		temperatureAndConditionStack = {
 			// UIView()s are spacers
-			let s = UIStackView(arrangedSubviews: [UIView(), temperatureLabel, conditionLabel, UIView()])
+//			let s = UIStackView(arrangedSubviews: [UIView(), temperatureLabel, conditionLabel, UIView()])
+			let s = UIStackView(arrangedSubviews: [temperatureLabel, conditionLabel])
 			s.translatesAutoresizingMaskIntoConstraints = false
 			s.axis = .vertical
 			s.alignment = .leading
@@ -215,7 +236,13 @@ class WeatherConditionView: UIView {
 		let percentString: String? = percent.flatMap { String($0) }
 		
 		let attachment = NSTextAttachment()
-		attachment.image = UIImage(imageLiteralResourceName: "precip")
+		attachment.image = UIImage(imageLiteralResourceName: "precipitation")
+		attachment.bounds = CGRect(
+			x: 0,
+			y: precipitationLabel.font.descender,
+			width: attachment.image!.size.width,
+			height: attachment.image!.size.height
+		)
 		let attachmentString = NSAttributedString(attachment: attachment)
 		
 		let precipString = NSMutableAttributedString(attributedString: attachmentString)

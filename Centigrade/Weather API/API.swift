@@ -12,7 +12,7 @@ import PMKCoreLocation
 import PMKFoundation
 
 enum WeatherCondition {
-	case unknown, sunny, cloudy, clear
+	case unknown, sunny, cloudy, clear, rain, snow, thunderstorms, fog
 }
 
 struct Temperature: CustomDebugStringConvertible {
@@ -232,20 +232,52 @@ class API {
 			}
 		}
 		
-		for k in conditions.keys {
-			print(k)
-		}
-		
 		// there may be a comma after the condition part, as below:
 		//     Mostly sunny, with a high near 71.
 		// or just a sentence:
 		//     Sunny. High near 82, ...
 		let sentences: [Substring] = message.split(separator: ".")
 		
+		// sometimes the first sentence may be an additional one about rain ongoing
+		// or the chance of rain, rather than the general conditions.
+		guard let firstSentence = sentences.first?.lowercased() else {
+			print("API.parseCondition(fromForecastMessage:) could not separate sentences from given condition message.\n")
+			return ("Unknown", .unknown)
+		}
+		
+		let firstSentenceCommaParts = firstSentence.split(separator: ",")
+		let lastCommaPart = firstSentenceCommaParts.last ?? ""
+		
+		if lastCommaPart.contains("patchy fog") {
+			return ("Patchy Fog", .fog)
+		} else if lastCommaPart.contains("fog") {
+			return ("Fog", .fog)
+		}
+		
+		for (precipitationType, condition) in [
+			"rain": WeatherCondition.rain,
+			"snow": WeatherCondition.snow,
+			"showers and thunderstorms": WeatherCondition.thunderstorms,
+			"thunderstorms": WeatherCondition.thunderstorms,
+			"showers": WeatherCondition.rain
+		] {
+			if
+				lastCommaPart.contains("slight chance of \(precipitationType)") ||
+				lastCommaPart.contains("chance of \(precipitationType)")
+			{
+				return ("Chance \(precipitationType.localizedCapitalized)", condition)
+			} else if
+				lastCommaPart.contains("\(precipitationType) likely") ||
+				lastCommaPart.contains(precipitationType)
+			{
+				return (precipitationType.localizedCapitalized, condition)
+			}
+		}
+		
 		// ["Mostly sunny", " with a high near 71"]
 		// potentialCondition = "mostly sunny" -- note the lowercase
-		if let description = sentences.first?.split(separator: ",").first?.lowercased(),
-		   let condition = conditions[description]
+		if let description = firstSentenceCommaParts.first,
+		   let condition = conditions[String(description)]
 		{
 			let titleDescription = description.capitalized
 			return (titleDescription, condition)
@@ -253,7 +285,7 @@ class API {
 		
 		print("API.parseCondition(fromForecastMessage:) could not interpret condition:\n")
 		print("\t\(message)\n")
-		
+		print("LASTCOMMAPART: '\(lastCommaPart)'")
 		return ("Unknown", .unknown)
 	}
 }

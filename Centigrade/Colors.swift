@@ -19,4 +19,9 @@ class Colors {
 	
 	static let weatherSunnyBackground  = makeP3Color(248, 231, 28, 1.0)
 	static let weatherCloudyBackground = makeP3Color(54, 223, 196, 1.0)
+	static let weatherNightBackground = makeP3Color(173, 144, 227, 1.0)
+	static let weatherRainBackground = makeP3Color(77, 147, 255, 1.0)
+	static let weatherSnowBackground = makeP3Color(123, 195, 255, 1.0)
+	static let weatherFogBackground = makeP3Color(95, 126, 174, 1.0)
+	static let weatherThunderstormsBackground = makeP3Color(93, 98, 242, 1.0)
 }
