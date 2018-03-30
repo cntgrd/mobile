@@ -63,6 +63,10 @@ struct Temperature: CustomDebugStringConvertible {
 	}
 }
 
+extension Temperature.Unit: Codable {
+	
+}
+
 enum APIError: Error {
 	case malformedURL, malformedDate, unexpectedValue(String)
 }

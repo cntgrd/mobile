@@ -67,8 +67,15 @@ struct WeatherConditionViewModel: ViewModel {
 		}
 		
 		// set temperature
-		// TODO user-defined unit preference
-		v.temperatureLabel.text = "\(temperature.inFahrenheit)°F"
+		switch SettingsManager.shared.units.temperature.value {
+		case .fahrenheit:
+			print("F")
+			v.temperatureLabel.text = "\(temperature.inFahrenheit)°F"
+		case .celsius:
+			print("C")
+			v.temperatureLabel.text = "\(temperature.inCelsius)°C"
+		}
+		
 		
 		return v
 	}

@@ -18,13 +18,41 @@ class AppSettingsViewController: FormViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		form
-		+++ Section(
+		let unitsSection = Section(
 			header: "Units",
 			footer: "This will affect measurements in this app from the National Weather Service or your Centigrade station."
 		)
-		<<< makeOptionRow(withTitle: "Temperature", options: ["Fahrenheit","Celsius"], value: "Fahrenheit")
-		<<< makeOptionRow(withTitle: "Pressure", options: ["inHg","mmHg","Millibar","Atmospheres"], value: "inHg")
+		
+		
+		
+		form +++ unitsSection
+		<<< makeOptionRow(fromOptionSetting: SettingsManager.shared.units.temperature, withTitle: "Temperature")
+//		<<< makeOptionRow(withTitle: "Temperature", options: ["Fahrenheit","Celsius"], value: "Fahrenheit")
+//		<<< makeOptionRow(withTitle: "Pressure", options: ["inHg","mmHg","Millibar","Atmospheres"], value: "inHg")
+	}
+	
+	private func makeOptionRow<T>(fromOptionSetting setting: OptionSetting<T>, withTitle title: String) -> PushRow<T> {
+		return PushRow<T> { row in
+			row.title = title
+			row.options = setting.options
+			row.value = setting.value
+		}.onPresent { form, selectorController in
+			selectorController.enableDeselection = false
+			selectorController.selectableRowCellUpdate = { cell, row in
+				if
+					let option = row.selectableValue,
+					let label = cell.textLabel,
+					let name = setting.nameForOption(option)
+				{
+					label.text = name
+				}
+			}
+		}.onChange { row in
+			if let newValue = row.value {
+				setting.value = newValue
+			}
+			row.updateCell()
+		}
 	}
 	
 	private func makeOptionRow(withTitle title: String, options: [String], value: String) -> PushRow<String> {
