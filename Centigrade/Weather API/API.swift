@@ -25,7 +25,10 @@ struct Temperature: CustomDebugStringConvertible {
 		}
 	}
 	
-	enum Unit { case fahrenheit, celsius }
+	enum Unit: String {
+		case fahrenheit = "Fahrenheit", celsius = "Celsius"
+		static var allValues: [Unit] { return [.fahrenheit, .celsius] }
+	}
 	
 	private var value: Int
 	private var unit: Unit
