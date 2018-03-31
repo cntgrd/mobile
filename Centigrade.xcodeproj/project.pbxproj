@@ -10,6 +10,8 @@
 		2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */; };
 		2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */; };
 		27159966206E9C80008F1AEE /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27159965206E9C80008F1AEE /* SettingsManager.swift */; };
+		2715996820701A0A008F1AEE /* ShowViewControllerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2715996720701A0A008F1AEE /* ShowViewControllerRow.swift */; };
+		2715996C20702BD4008F1AEE /* WeatherConditionPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2715996B20702BD4008F1AEE /* WeatherConditionPlaceholderView.swift */; };
 		2718D8AE20460BCC0005C1CD /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AD20460BCC0005C1CD /* Colors.swift */; };
 		2718D8B0204610480005C1CD /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8AF204610480005C1CD /* ViewModel.swift */; };
 		2718D8B320487B6E0005C1CD /* CardScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2718D8B220487B6E0005C1CD /* CardScrollView.swift */; };
@@ -56,6 +58,8 @@
 		2700D45A1FABF82F00186C8B /* MKMapView+AttributionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKMapView+AttributionLabel.swift"; sourceTree = "<group>"; };
 		2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Edges.swift"; sourceTree = "<group>"; };
 		27159965206E9C80008F1AEE /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		2715996720701A0A008F1AEE /* ShowViewControllerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowViewControllerRow.swift; sourceTree = "<group>"; };
+		2715996B20702BD4008F1AEE /* WeatherConditionPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherConditionPlaceholderView.swift; sourceTree = "<group>"; };
 		2718D8AD20460BCC0005C1CD /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		2718D8AF204610480005C1CD /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		2718D8B220487B6E0005C1CD /* CardScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardScrollView.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 				276A4E752018E73B00A441E7 /* CircleUserTrackingButton.swift */,
 				2700D45C1FABFFDC00186C8B /* UIView+Edges.swift */,
 				2718D8AF204610480005C1CD /* ViewModel.swift */,
+				2715996720701A0A008F1AEE /* ShowViewControllerRow.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				2718D8B82048903E0005C1CD /* WeatherConditionView.swift */,
+				2715996B20702BD4008F1AEE /* WeatherConditionPlaceholderView.swift */,
 			);
 			path = "Weather Condition Views";
 			sourceTree = "<group>";
@@ -418,6 +424,7 @@
 				2E31A9892061B6CD000EA39D /* Secrets.swift in Sources */,
 				2700D45B1FABF82F00186C8B /* MKMapView+AttributionLabel.swift in Sources */,
 				274B7FBB1FBDF67400CEC95E /* ImageTools.swift in Sources */,
+				2715996820701A0A008F1AEE /* ShowViewControllerRow.swift in Sources */,
 				273E9A38206ADBA4008E3FE2 /* API.swift in Sources */,
 				2718D8B320487B6E0005C1CD /* CardScrollView.swift in Sources */,
 				276A4E7C201ABB8700A441E7 /* RandomUtilities.swift in Sources */,
@@ -427,6 +434,7 @@
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
+				2715996C20702BD4008F1AEE /* WeatherConditionPlaceholderView.swift in Sources */,
 				2718D8B92048903E0005C1CD /* WeatherConditionView.swift in Sources */,
 				2718D8AE20460BCC0005C1CD /* Colors.swift in Sources */,
 				274B7FB91FBDEE8B00CEC95E /* CircleButton.swift in Sources */,

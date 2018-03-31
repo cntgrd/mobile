@@ -34,16 +34,6 @@ class CardView: UIView {
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		translatesAutoresizingMaskIntoConstraints = false
-		backgroundColor = .white
-		setupShadow()
-	}
-	
-	private func setupShadow() {
-		layer.shadowColor = UIColor.black.cgColor
-		layer.shadowRadius = 8
-		layer.shadowOffset = CGSize(width: 0, height: 5)
-		layer.shadowOpacity = 0.3
-		layer.masksToBounds = false
 	}
 	
 	override func layoutSubviews() {

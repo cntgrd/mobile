@@ -11,11 +11,10 @@ import MapKit
 
 class MapViewController: UIViewController {
 	
-	var conditionViewModels = [ViewModel]()
-//		return [
-//			WeatherConditionViewModel(title: "Today", condition: .sunny),
-//			WeatherConditionViewModel(title: "Tomorrow", condition: .cloudy)
-//		]
+	// fill it with placeholders while real weather data is loading...
+	lazy var conditionViewModels: [ViewModel] = {
+		return Array(repeating: WeatherConditionPlaceholderViewModel(), count: 5)
+	}()
 	
 	lazy var locationManager: CLLocationManager = API.locationManager
 	
@@ -76,6 +75,8 @@ class MapViewController: UIViewController {
 		
 		mapView.appSettingsButton.addTarget(self, action: #selector(didPressAppSettingsButton), for: .touchUpInside)
 		
+		// this will display the placeholders until the below promise
+		// completes and calls "reloadData"
 		mapView.cardScrollView.dataSource = self
 		
 		locationManager.requestWhenInUseAuthorization()

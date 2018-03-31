@@ -23,50 +23,70 @@ struct WeatherConditionViewModel: ViewModel {
 		isDaytime = period.isDaytime
 	}
 	
+	private func backgroundColorForWeather() -> UIColor {
+		if !isDaytime { return Colors.weatherNightBackground }
+		switch condition {
+		case .unknown:
+			return .white
+		case .sunny:
+			return Colors.weatherSunnyBackground
+		case .cloudy:
+			return Colors.weatherCloudyBackground
+		case .clear:
+			return Colors.weatherNightBackground
+		case .rain:
+			return Colors.weatherRainBackground
+		case .snow:
+			return Colors.weatherSnowBackground
+		case .thunderstorms:
+			return Colors.weatherThunderstormsBackground
+		case .fog:
+			return Colors.weatherFogBackground
+		}
+	}
+	
+	private func iconForWeather() -> UIImage {
+		var resourceName = ""
+		switch condition {
+		case .sunny:
+			resourceName = "condition-sunny-icon-64"
+		case .cloudy:
+			resourceName = "condition-cloudy-icon-64"
+		case .unknown:
+			return UIImage()
+		case .clear:
+			resourceName = "condition-night-icon-64"
+		case .rain:
+			resourceName = "condition-rain-icon-64"
+		case .snow:
+			resourceName = "condition-snow-icon-64"
+		case .thunderstorms:
+			resourceName = "condition-tstorms-icon-64"
+		case .fog:
+			resourceName = "condition-fog-icon-64"
+		}
+		return UIImage(imageLiteralResourceName: resourceName)
+	}
+	
 	func makeView(from view: UIView?) -> UIView {
 		let v = (view as? WeatherConditionView) ?? WeatherConditionView()
 		v.titleLabel.text = title
 		
-		// set condition styling
-		v.backgroundColor = .white
-		v.conditionIconView.image = UIImage()
-		v.conditionLabel.text = "—"
-		
+		// if the condition is listed as unknown, just leave the dash in
+		// the label.
 		if condition != .unknown {
 			v.conditionLabel.text = conditionDescription
+		} else {
+			v.conditionLabel.text = "—"
 		}
 		
-		switch condition {
-		case .sunny:
-			v.backgroundColor = Colors.weatherSunnyBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-sunny-icon-64")
-		case .cloudy:
-			v.backgroundColor = Colors.weatherCloudyBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-cloudy-icon-64")
-		case .unknown:
-			break
-		case .clear:
-			v.backgroundColor = Colors.weatherNightBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-night-icon-64")
-		case .rain:
-			v.backgroundColor = Colors.weatherRainBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-rain-icon-64")
-		case .snow:
-			v.backgroundColor = Colors.weatherSnowBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-snow-icon-64")
-		case .thunderstorms:
-			v.backgroundColor = Colors.weatherThunderstormsBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-tstorms-icon-64")
-		case .fog:
-			v.backgroundColor = Colors.weatherFogBackground
-			v.conditionIconView.image = UIImage(imageLiteralResourceName: "condition-fog-icon-64")
-		}
+		// Pick the icon and background color based on the
+		// WeatherConditionViewModel.condition property WeatherCondition enum.
+		v.backgroundColor = backgroundColorForWeather()
+		v.conditionIconView.image = iconForWeather()
 		
-		if !isDaytime {
-			v.backgroundColor = Colors.weatherNightBackground
-		}
-		
-		// set temperature
+		// a reusable closure for updating the temperature label based on
+		// differing preferences as to Fahrenheit or Celsius
 		let updateTemperatureUnit = {
 			switch SettingsManager.shared.units.temperature.value {
 			case .fahrenheit:
@@ -75,8 +95,12 @@ struct WeatherConditionViewModel: ViewModel {
 				v.temperatureLabel.text = "\(self.temperature.inCelsius)°C"
 			}
 		}
+		// set the temperature label once:
 		updateTemperatureUnit()
 		
+		// Since the view may not be disposed when somewhere else (i.e. in the settings
+		// changing the unit preference), we need to observe for changes to the
+		// setting then update the unit in the temperature label.
 		NotificationCenter.default.addObserver(
 			forName: SettingsManager.shared.units.temperature.didChangeNotification,
 			object: nil,
@@ -89,7 +113,9 @@ struct WeatherConditionViewModel: ViewModel {
 	}
 }
 
-class WeatherConditionView: UIView {
+final class WeatherConditionView: UIView {
+	
+	static let defaultSize: CGSize = CGSize(width: 196, height: 221)
 	
 	let measurementLabelSize = 1.1 * UIFont.systemFontSize
 	
@@ -152,8 +178,6 @@ class WeatherConditionView: UIView {
 		}()
 		
 		temperatureAndConditionStack = {
-			// UIView()s are spacers
-//			let s = UIStackView(arrangedSubviews: [UIView(), temperatureLabel, conditionLabel, UIView()])
 			let s = UIStackView(arrangedSubviews: [temperatureLabel, conditionLabel])
 			s.translatesAutoresizingMaskIntoConstraints = false
 			s.axis = .vertical
@@ -183,6 +207,7 @@ class WeatherConditionView: UIView {
 		addSubview(pressureMeasurementLabel)
 		addSubview(pressureWordLabel)
 		
+		setupShadow()
 		setupConstraints()
 		
 		setTemperatures(high: nil, low: nil)
@@ -193,9 +218,17 @@ class WeatherConditionView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func setupConstraints() {
-		constrainToHeight(221)
-		constrainToWidth(196)
+	private func setupShadow() {
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowRadius = 8
+		layer.shadowOffset = CGSize(width: 0, height: 5)
+		layer.shadowOpacity = 0.3
+		layer.masksToBounds = false
+	}
+	
+	private func setupConstraints() {
+		constrainToHeight(WeatherConditionView.defaultSize.height)
+		constrainToWidth(WeatherConditionView.defaultSize.width)
 		
 		let inset: CGFloat = 20
 		

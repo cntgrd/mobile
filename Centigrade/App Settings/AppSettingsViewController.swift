@@ -9,7 +9,7 @@
 import UIKit
 import Eureka
 
-class AppSettingsViewController: FormViewController {
+final class AppSettingsViewController: FormViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		navigationController?.setNavigationBarHidden(false, animated: false)
@@ -23,12 +23,22 @@ class AppSettingsViewController: FormViewController {
 			footer: "This will affect measurements in this app from the National Weather Service or your Centigrade station."
 		)
 		
-		
-		
 		form +++ unitsSection
 		<<< makeOptionRow(fromOptionSetting: SettingsManager.shared.units.temperature, withTitle: "Temperature")
 //		<<< makeOptionRow(withTitle: "Temperature", options: ["Fahrenheit","Celsius"], value: "Fahrenheit")
 //		<<< makeOptionRow(withTitle: "Pressure", options: ["inHg","mmHg","Millibar","Atmospheres"], value: "inHg")
+		
+		form +++ Section()
+		<<< ShowViewControllerRow { row in
+			row.title = "Acknowledgments"
+		}.usingNavigationController { [unowned self] in
+			return self.navigationController
+		}
+		.viewControllerSetup {
+			let vc = UIViewController()
+			vc.view.backgroundColor = .blue
+			return vc
+		}
 	}
 	
 	private func makeOptionRow<T>(fromOptionSetting setting: OptionSetting<T>, withTitle title: String) -> PushRow<T> {
