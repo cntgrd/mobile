@@ -123,7 +123,7 @@ firstly {
 
 firstly {
     URLSession.shared.POST("http://example.com", JSON: params)
-}.compactMap {
+}.map {
     try JSONDecoder().decoder(Foo.self, with: $0.data)
 }.done { foo in
     //…
@@ -132,14 +132,14 @@ firstly {
 }
 ```
 
-// And (of course) plain `URLSession`:
+And (of course) plain `URLSession`:
 
 ```swift
 // pod 'PromiseKit/Foundation'  # https://github.com/PromiseKit/Foundation
 
 firstly {
     URLSession.shared.dataTask(.promise, with: try makeUrlRequest())
-}.compactMap {
+}.map {
     try JSONDecoder().decode(Foo.self, with: $0.data)
 }.done { foo in
     //…
@@ -161,7 +161,7 @@ Nowadays, considering that:
 
 * We almost always POST JSON
 * We now have `JSONDecoder`
-* PromiseKit now has `compactMap`
+* PromiseKit now has `map` and other functional primitives
 
 We recommend vanilla `URLSession`; use less black-boxes, stick closer to the
 metal. Alamofire was essential until the three bulletpoints above became true,
@@ -171,7 +171,8 @@ rarely network anything but JSON.
 
 # Support
 
-Ask your question at our [Gitter chat channel] or on [our bug tracker].
+Please check our [Troubleshooting Guide](Documentation/Troubleshooting.md) and
+if after that you still have a question ask at our [Gitter chat channel] or on [our bug tracker].
 
 
 [badge-pod]: https://img.shields.io/cocoapods/v/PromiseKit.svg?label=version

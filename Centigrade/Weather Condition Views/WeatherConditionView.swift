@@ -15,7 +15,7 @@ struct WeatherConditionViewModel: ViewModel {
 	var temperature: Temperature
 	var isDaytime: Bool
 	
-	init(fromNWSPeriod period: NWSForecast.Period) {
+	init(fromNWSPeriod period: NationalWeatherServiceAPI.Forecast.Period) {
 		title = period.name
 		temperature = period.temperature
 		condition = period.condition

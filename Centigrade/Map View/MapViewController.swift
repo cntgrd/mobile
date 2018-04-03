@@ -16,7 +16,7 @@ class MapViewController: UIViewController {
 		return Array(repeating: WeatherConditionPlaceholderViewModel(), count: 5)
 	}()
 	
-	lazy var locationManager: CLLocationManager = API.locationManager
+	lazy var locationManager: CLLocationManager = NationalWeatherServiceAPI.locationManager
 	
 	lazy var weatherOverlay: MKTileOverlay = {
 		// [CITE] http://mesonet.agron.iastate.edu/ogc/
@@ -81,7 +81,7 @@ class MapViewController: UIViewController {
 		
 		locationManager.requestWhenInUseAuthorization()
 		
-		API.getForecastAtCurrentLocation().done { forecast in
+		NationalWeatherServiceAPI.getForecastAtCurrentLocation().done { forecast in
 			self.conditionViewModels = forecast.periods.map {
 				WeatherConditionViewModel(fromNWSPeriod: $0)
 			}
