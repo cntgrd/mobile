@@ -112,7 +112,7 @@ class NationalWeatherServiceAPI {
 					} else {
 						throw ErrorType.unexpectedValue("Given temperatureUnit '\(period.temperatureUnit)'")
 					}
-					}()
+				}()
 				
 				let (conditionDescription, condition) = NationalWeatherServiceAPI.parseCondition(
 					fromForecastMessage: period.detailedForecast
@@ -135,7 +135,7 @@ class NationalWeatherServiceAPI {
 	}
 	
 	// the root URL of the National Weather Service API
-	static let nwsRoot: URL? = URL(string: "https://api.weather.gov/")
+	static let rootURL: URL? = URL(string: "https://api.weather.gov/")
 	
 	static let locationManager = CLLocationManager()
 	
@@ -151,17 +151,25 @@ class NationalWeatherServiceAPI {
 	
 	static func getForecast(atLocation location: CLLocation) -> Promise<Forecast> {
 		// build the URL corresponding to the given coordinate
-		let (lat, lon) = (location.coordinate.latitude, location.coordinate.longitude)
-		let path = "points/\(lat),\(lon)/forecast"
 		
-		guard let url = nwsRoot?.appendingPathComponent(path) else {
-			 return Promise(error: ErrorType.malformedURL)
-		}
-		
-		let request = URLRequest(url: url)
-		return URLSession.shared.dataTask(.promise, with: request).map {
+		// "firstly" and "then" return Promises.
+		// "map" returns values.
+		return firstly {
+			APITools.urlEncode(coordinate: location.coordinate)
+		}.then { coord in
+			// try to generate the endpoint URL
+			APITools.promiseEndpoint(withRootURL: rootURL, endpoint: "points/\(coord)/forecast")
+		}.map { url in
+			// turn it into a request
+			URLRequest(url: url)
+		}.then { request in
+			// this is a promise (async)
+			URLSession.shared.dataTask(.promise, with: request)
+		}.map {
 			try JSONDecoder().decode(RawForecastResponse.self, from: $0.data)
 		}.map {
+			// RawForecast is an intermediary type reflecting the JSON schema
+			// Forecast is more Swift friendly, with Date types, etc.
 			try Forecast(fromRawForecast: $0)
 		}
 	}

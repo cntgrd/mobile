@@ -35,6 +35,8 @@
 		27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */; };
 		27D267E02021292C007A2FCB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D267DF2021292C007A2FCB /* MapView.swift */; };
 		27DEB5B020730D110059A360 /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DEB5AF20730D110059A360 /* Temperature.swift */; };
+		27DEB5B220743A440059A360 /* CentigradeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DEB5B120743A440059A360 /* CentigradeAPI.swift */; };
+		27DEB5B420743B140059A360 /* APITools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27DEB5B320743B140059A360 /* APITools.swift */; };
 		2E31A9892061B6CD000EA39D /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E31A9882061B6CD000EA39D /* Secrets.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		27D267DA201FE904007A2FCB /* AppSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		27D267DF2021292C007A2FCB /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		27DEB5AF20730D110059A360 /* Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
+		27DEB5B120743A440059A360 /* CentigradeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CentigradeAPI.swift; sourceTree = "<group>"; };
+		27DEB5B320743B140059A360 /* APITools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITools.swift; sourceTree = "<group>"; };
 		2E31A9882061B6CD000EA39D /* Secrets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,8 +238,10 @@
 		27B8BAA8202173EC00C4D558 /* Weather API */ = {
 			isa = PBXGroup;
 			children = (
+				27DEB5B320743B140059A360 /* APITools.swift */,
 				273E9A37206ADBA4008E3FE2 /* NationalWeatherServiceAPI.swift */,
 				27DEB5AF20730D110059A360 /* Temperature.swift */,
+				27DEB5B120743A440059A360 /* CentigradeAPI.swift */,
 			);
 			path = "Weather API";
 			sourceTree = "<group>";
@@ -406,12 +412,14 @@
 				"$(SRCROOT)/Carthage/Build/iOS/PMKFoundation.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PMKCoreLocation.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PromiseKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/CentigradeData.framework",
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Eureka.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PMKFoundation.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PMKCoreLocation.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/PromiseKit.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CentigradeData.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -436,6 +444,7 @@
 				2718D8B720488EED0005C1CD /* CardView.swift in Sources */,
 				2700D45D1FABFFDC00186C8B /* UIView+Edges.swift in Sources */,
 				275B6A5E1FE99AB20045F172 /* StateMachine.swift in Sources */,
+				27DEB5B220743A440059A360 /* CentigradeAPI.swift in Sources */,
 				271965F71FCE273700198BEE /* LoadingState.swift in Sources */,
 				2715996C20702BD4008F1AEE /* WeatherConditionPlaceholderView.swift in Sources */,
 				2718D8B92048903E0005C1CD /* WeatherConditionView.swift in Sources */,
@@ -448,6 +457,7 @@
 				27DEB5B020730D110059A360 /* Temperature.swift in Sources */,
 				272C56251FA924D800A799CE /* AppDelegate.swift in Sources */,
 				27159966206E9C80008F1AEE /* SettingsManager.swift in Sources */,
+				27DEB5B420743B140059A360 /* APITools.swift in Sources */,
 				27D267DB201FE904007A2FCB /* AppSettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
