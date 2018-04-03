@@ -14,6 +14,7 @@ struct Temperature: CustomDebugStringConvertible {
 		case .fahrenheit:
 			return "Temperature(\(value)°F)"
 		case .celsius:
+			
 			return "Temperature(\(value)°C)"
 		}
 	}
