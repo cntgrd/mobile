@@ -56,7 +56,7 @@ message Sensor {
         TEMPERATURE = 6;
         TOTAL_VOC = 7;
     }
-    SensorType sensor_type = 2;
+    repeated SensorType sensor_type = 2;
 }
 
 /*

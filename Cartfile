@@ -1,4 +1,4 @@
 github "xmartlabs/Eureka" ~> 4.0
 github "ReactiveX/RxSwift" ~> 4.0
 github "RxSwiftCommunity/RxCoreLocation" ~> 1.2.0
-github "cntgrd/data" ~> 0.0.10
+github "cntgrd/data" ~> 0.1.0

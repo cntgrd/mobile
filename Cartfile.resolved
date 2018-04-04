@@ -1,5 +1,5 @@
 github "ReactiveX/RxSwift" "4.1.2"
 github "RxSwiftCommunity/RxCoreLocation" "1.2.0"
 github "apple/swift-protobuf" "1.0.3"
-github "cntgrd/data" "0.0.10"
+github "cntgrd/data" "0.1.0"
 github "xmartlabs/Eureka" "4.1.1"
