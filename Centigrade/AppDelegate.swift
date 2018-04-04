@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		
 		window!.backgroundColor = .white
 		window!.makeKeyAndVisible()
+		
+		APITools.locationSetup()
 		
 		return true
 	}

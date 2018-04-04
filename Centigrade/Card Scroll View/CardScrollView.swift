@@ -98,7 +98,7 @@ final class CardScrollView: UIView, LoadingState {
 	// if there is no datasource (nil), nothing happens on reloadData()
 	open var dataSource: CardScrollViewDataSource? = nil {
 		didSet {
-			reloadData()
+			self.reloadData()
 		}
 	}
 	

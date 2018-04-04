@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import RxSwift
 
 class MapViewController: UIViewController {
 	
@@ -15,8 +16,6 @@ class MapViewController: UIViewController {
 	lazy var conditionViewModels: [ViewModel] = {
 		return Array(repeating: WeatherConditionPlaceholderViewModel(), count: 5)
 	}()
-	
-	lazy var locationManager: CLLocationManager = NationalWeatherServiceAPI.locationManager
 	
 	lazy var weatherOverlay: MKTileOverlay = {
 		// [CITE] http://mesonet.agron.iastate.edu/ogc/
@@ -63,6 +62,8 @@ class MapViewController: UIViewController {
 		navigationController?.setNavigationBarHidden(true, animated: false)
 	}
 	
+	private let bag = DisposeBag()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -79,16 +80,24 @@ class MapViewController: UIViewController {
 		// completes and calls "reloadData"
 		mapView.cardScrollView.dataSource = self
 		
-		locationManager.requestWhenInUseAuthorization()
-		
-		NationalWeatherServiceAPI.getForecastAtCurrentLocation().done { forecast in
-			self.conditionViewModels = forecast.periods.map {
-				WeatherConditionViewModel(fromNWSPeriod: $0)
+		NationalWeatherServiceAPI.forecastAtCurrentLocation().subscribe { event in
+			switch event {
+			case .success(let forecast):
+				self.conditionViewModels = forecast.periods.map {
+					WeatherConditionViewModel(fromNWSPeriod: $0)
+				}
+				DispatchQueue.main.async {
+					self.mapView.cardScrollView.reloadData()
+				}
+			case .error(NationalWeatherServiceAPI.ErrorType.locationError):
+				APITools.promptUserForLocationSettings(self)
+			case .error(let error):
+				print(
+					"Error loading forecasts: \(type(of: error)) " +
+					"\(error.localizedDescription)"
+				)
 			}
-			self.mapView.cardScrollView.reloadData()
-		}.catch { error in
-			print("Error loading forecasts: \(error.localizedDescription)")
-		}
+		}.disposed(by: bag)
 	}
 	
 	override func didReceiveMemoryWarning() {

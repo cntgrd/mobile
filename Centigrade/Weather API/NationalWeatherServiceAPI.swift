@@ -7,9 +7,8 @@
 //
 
 import Foundation
-import PromiseKit
-import PMKCoreLocation
-import PMKFoundation
+import RxSwift
+import CoreLocation
 
 enum WeatherCondition {
 	case unknown, sunny, cloudy, clear, rain, snow, thunderstorms, fog
@@ -24,6 +23,10 @@ extension NationalWeatherServiceAPI.ErrorType: LocalizedError {
 			return "The date string from the server could not be converted into a native date format."
 		case let .unexpectedValue(message):
 			return "Unexpected value: \(message)"
+		case .cannotParseData:
+			return "Cannot parse response data."
+		case .locationError:
+			return "Cannot retrieve location."
 		}
 	}
 }
@@ -79,7 +82,8 @@ class NationalWeatherServiceAPI {
 	}
 	
 	enum ErrorType: Error {
-		case malformedURL, malformedDate, unexpectedValue(String)
+		case malformedURL, malformedDate, unexpectedValue(String),
+		cannotParseData, locationError
 	}
 	
 	struct Forecast {
@@ -137,46 +141,50 @@ class NationalWeatherServiceAPI {
 	// the root URL of the National Weather Service API
 	static let rootURL: URL? = URL(string: "https://api.weather.gov/")
 	
-	static let locationManager = CLLocationManager()
-	
 	fileprivate static func decodeNWSDate(_ dateString: String) -> Date? {
 		// "2018-03-05T18:00:00-06:00"
 		let isoFormatter = ISO8601DateFormatter()
 		return isoFormatter.date(from: dateString)
 	}
 	
-	static func getCurrentLocation() -> Promise<CLLocation> {
-		return CLLocationManager.promise().lastValue
-	}
-	
-	static func getForecast(atLocation location: CLLocation) -> Promise<Forecast> {
+	static func forecast(atLocation location: CLLocation) -> Single<Forecast> {
 		// build the URL corresponding to the given coordinate
 		
-		// "firstly" and "then" return Promises.
-		// "map" returns values.
-		return firstly {
-			APITools.urlEncode(coordinate: location.coordinate)
-		}.then { coord in
-			// try to generate the endpoint URL
-			APITools.promiseEndpoint(withRootURL: rootURL, endpoint: "points/\(coord)/forecast")
-		}.map { url in
-			// turn it into a request
-			URLRequest(url: url)
-		}.then { request in
-			// this is a promise (async)
-			URLSession.shared.dataTask(.promise, with: request)
-		}.map {
-			try JSONDecoder().decode(RawForecastResponse.self, from: $0.data)
-		}.map {
-			// RawForecast is an intermediary type reflecting the JSON schema
-			// Forecast is more Swift friendly, with Date types, etc.
-			try Forecast(fromRawForecast: $0)
+		return Single<Forecast>.create { single in
+			let coord = APITools.urlEncode(coordinate: location.coordinate)
+			guard let url = APITools.endpoint(
+				withRootURL: rootURL,
+				endpoint: "points/\(coord)/forecast"
+			) else {
+				single(.error(ErrorType.malformedURL))
+				return Disposables.create {}
+			}
+			
+			let request = URLRequest(url: url)
+			let task = URLSession.shared.dataTask(with: request) { data, res, error in
+				if let error = error {
+					single(.error(error))
+					return
+				}
+				let decoder = JSONDecoder()
+				guard
+					let data = data,
+					let raw = try? decoder.decode(RawForecastResponse.self, from: data),
+					let forecast = try? Forecast(fromRawForecast: raw)
+				else {
+					single(.error(ErrorType.cannotParseData))
+					return
+				}
+				single(.success(forecast))
+			}
+			task.resume()
+			return Disposables.create { task.cancel() }
 		}
 	}
 	
-	static func getForecastAtCurrentLocation() -> Promise<Forecast> {
-		return getCurrentLocation().then { location in
-			getForecast(atLocation: location)
+	static func forecastAtCurrentLocation() -> Single<Forecast> {
+		return APITools.location().flatMap { location in
+			return forecast(atLocation: location)
 		}
 	}
 	

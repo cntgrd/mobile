@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import PromiseKit
+import RxSwift
 import CentigradeData // Protobuf generated types
 
 class CentigradeAPI {
@@ -17,22 +17,22 @@ class CentigradeAPI {
 	
 	static private let rootURL: URL? = URL(string: "https://dev.centigrade.me/api")
 	
-	static private func rawRecentMeasurements(forStation station: StationUUID)
-	-> Promise<CentigradeData.Centigrade_StationRecentMeasurements>
-	{
-		return firstly {
-			APITools.promiseEndpoint(withRootURL: rootURL, endpoint: "data")
-		}.map { url in
-			URLRequest(url: url)
-		}.then { request in
-			URLSession.shared.dataTask(.promise, with: request)
-		}.map {
-			let ResponseType = CentigradeData.Centigrade_StationRecentMeasurements.self
-			guard let recentMeasurements = try? ResponseType.init(serializedData: $0.data)
-			else {
-				throw ErrorType.protobufDecodingFailed
-			}
-			return recentMeasurements
-		}
-	}
+//	static private func rawRecentMeasurements(forStation station: StationUUID)
+//	-> Promise<CentigradeData.Centigrade_StationRecentMeasurements>
+//	{
+//		return firstly {
+//			APITools.promiseEndpoint(withRootURL: rootURL, endpoint: "data")
+//		}.map { url in
+//			URLRequest(url: url)
+//		}.then { request in
+//			URLSession.shared.dataTask(.promise, with: request)
+//		}.map {
+//			let ResponseType = CentigradeData.Centigrade_StationRecentMeasurements.self
+//			guard let recentMeasurements = try? ResponseType.init(serializedData: $0.data)
+//			else {
+//				throw ErrorType.protobufDecodingFailed
+//			}
+//			return recentMeasurements
+//		}
+//	}
 }
