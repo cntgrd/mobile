@@ -14,6 +14,7 @@ struct WeatherConditionViewModel: ViewModel {
 	var conditionDescription: String
 	var temperature: Temperature
 	var isDaytime: Bool
+	var precipitation: Int?
 	
 	init(fromNWSPeriod period: NationalWeatherServiceAPI.Forecast.Period) {
 		title = period.name
@@ -21,6 +22,7 @@ struct WeatherConditionViewModel: ViewModel {
 		condition = period.condition
 		conditionDescription = period.conditionDescription
 		isDaytime = period.isDaytime
+		precipitation = period.precipitation
 	}
 	
 	private func backgroundColorForWeather() -> UIColor {
@@ -84,6 +86,8 @@ struct WeatherConditionViewModel: ViewModel {
 		// WeatherConditionViewModel.condition property WeatherCondition enum.
 		v.backgroundColor = backgroundColorForWeather()
 		v.conditionIconView.image = iconForWeather()
+		
+		v.setPrecipitation(percent: precipitation)
 		
 		// a reusable closure for updating the temperature label based on
 		// differing preferences as to Fahrenheit or Celsius

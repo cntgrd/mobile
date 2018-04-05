@@ -97,6 +97,7 @@ class NationalWeatherServiceAPI {
 			var temperature: Temperature
 			var condition: WeatherCondition
 			var conditionDescription: String
+			var precipitation: Int?
 		}
 		
 		var periods: [Period]
@@ -124,6 +125,10 @@ class NationalWeatherServiceAPI {
 					fromForecastMessage: period.detailedForecast
 				)
 				
+				let precipitation = NationalWeatherServiceAPI.parsePrecipitationPercent(
+					fromForecastMessage: period.detailedForecast
+				)
+				
 				return Period(
 					number: period.number,
 					name: period.name,
@@ -131,7 +136,8 @@ class NationalWeatherServiceAPI {
 					isDaytime: period.isDaytime,
 					temperature: temperature,
 					condition: condition,
-					conditionDescription: conditionDescription
+					conditionDescription: conditionDescription,
+					precipitation: precipitation
 				)
 				}.sorted(by: {
 					// areInIncreasingOrder
@@ -188,6 +194,43 @@ class NationalWeatherServiceAPI {
 		return APITools.location().flatMap { location in
 			return forecast(atLocation: location)
 		}
+	}
+	
+	static func parsePrecipitationPercent(fromForecastMessage message: String) -> Int? {
+		// of the period-delimited sentences, there will be
+		// exactly zero or one of the format:
+		//     "Chance of precipitation is 90%."
+		//
+		let sentences: [Substring] = message.lowercased().split(separator: ".")
+		for sentence in sentences {
+			guard sentence.contains("chance of precipitation is") else {
+//				print("(Doesn't contain magic string)")
+				continue
+			}
+			let words = sentence.split(separator: " ")
+			guard let lastWord = words.last else {
+//				print("(Can't get last word)")
+				continue
+			}
+			// last word should be "##%"
+			guard lastWord.last == "%" else {
+//				print("(Last word doesn't end in percent)")
+				continue
+			}
+			
+			// numberString is the "##" without the percent symbol
+			let end = lastWord.index(lastWord.endIndex, offsetBy: -1)
+			let numberString = lastWord[lastWord.startIndex..<end]
+			guard
+				let number = Int(string: String(numberString)),
+				(0...100).contains(number)
+			else {
+//				print("Cannot parse \(numberString) to a number or it isn't 0...100)")
+				continue
+			}
+			return number
+		}
+		return nil
 	}
 	
 	static func parseCondition(fromForecastMessage message: String) -> (String, WeatherCondition) {
