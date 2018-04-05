@@ -98,6 +98,15 @@ class MapViewController: UIViewController {
 				)
 			}
 		}.disposed(by: bag)
+		
+		CentigradeAPI.rawRecentMeasurements(forStation: "0000000000").subscribe { result in
+			switch result {
+			case .success(let value):
+				print(value.textFormatString())
+			case .error(let error):
+				print(error.localizedDescription)
+			}
+		}.disposed(by: bag)
 	}
 	
 	override func didReceiveMemoryWarning() {

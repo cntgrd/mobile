@@ -33,6 +33,8 @@ extension NationalWeatherServiceAPI.ErrorType: LocalizedError {
 
 class NationalWeatherServiceAPI {
 	
+	private static let forecastPeriodLimit = 10
+	
 	// this struct mirrors the format of the JSON response
 	// (it is a subset of it). We only use this as an intermediary
 	// format before converting it to the more friendly NWSForecast
