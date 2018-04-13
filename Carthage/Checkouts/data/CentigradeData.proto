@@ -1,0 +1,90 @@
+/*
+ * CentigradeData.proto 
+ * Provides a medium for sensor<->device<->server communication
+ */
+
+syntax = "proto3";
+
+package Centigrade;
+
+/*
+ * Weather
+ *
+ */
+
+message Celsius {
+    double value = 1;    
+}
+
+message Hectopascals {
+    uint32 value = 1;    
+}
+
+message Meters {
+    sint32 value = 1;    
+}
+
+message MetersPerSecond {
+    double value = 1;    
+}
+
+message PartsPerBillion {
+    uint32 value = 1;
+}
+
+message PartsPerMillion {
+    uint32 value = 1; 
+}
+
+message Percent {
+    uint32 value = 1;    
+}
+
+message Radians {
+    double value = 1;    
+}
+
+message Sensor {
+    string uuid = 1;    
+    enum SensorType {
+        DEFAULT = 0;    
+        ALTITUDE = 1;
+        ANEMOMETER = 2;
+        EQUIVALENT_CO2 = 3;
+        HUMIDITY = 4;
+        PRESSURE = 5;
+        TEMPERATURE = 6;
+        TOTAL_VOC = 7;
+    }
+    repeated SensorType sensor_type = 2;
+}
+
+/*
+ * Measurement
+ */
+message Measurement {
+    uint64 time = 1;
+    oneof measurement {
+        Celsius temperature = 2;
+        Hectopascals pressure = 3;
+        Meters altitude = 4;
+        MetersPerSecond wind_speed = 5;
+        PartsPerBillion total_vocs = 6;
+        PartsPerMillion equivalent_co2 = 7;
+        Percent humidity = 8;
+        Radians wind_direction = 9;
+    }
+    Sensor sensor = 10;
+}
+
+message StationRecentMeasurements {
+    string uuid = 1;
+    repeated Measurement measurements = 2;
+}
+
+/*
+ * Authentication
+ *
+ */
+
+
